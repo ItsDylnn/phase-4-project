@@ -1,0 +1,107 @@
+import React from 'react';
+import ProjectList from '../components/Projects/ProjectList';
+import TaskList from '../components/Tasks/TaskList';
+import { useAuth } from '../context/AuthContext';
+
+const Dashboard = ({ projects, tasks, users }) => {
+  const { currentUser } = useAuth();
+  
+  const stats = {
+    totalProjects: projects.length,
+    totalTasks: tasks.length,
+    completedTasks: tasks.filter(task => task.status === 'Completed').length,
+    inProgressTasks: tasks.filter(task => task.status === 'In Progress').length,
+    myTasks: tasks.filter(task => task.assignee_id === currentUser.id).length
+  };
+
+  const recentTasks = tasks.slice(0, 5);
+  const myRecentTasks = tasks
+    .filter(task => task.assignee_id === currentUser.id)
+    .slice(0, 3);
+
+  return (
+    <div className="dashboard">
+      <div className="dashboard-header">
+        <h1>Welcome back, {currentUser.name}! 👋</h1>
+        <p>Here's what's happening with your projects today.</p>
+      </div>
+      
+      {/* Statistics Grid */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon">📁</div>
+          <div className="stat-content">
+            <h3>{stats.totalProjects}</h3>
+            <p>Total Projects</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">✅</div>
+          <div className="stat-content">
+            <h3>{stats.totalTasks}</h3>
+            <p>Total Tasks</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">🚀</div>
+          <div className="stat-content">
+            <h3>{stats.inProgressTasks}</h3>
+            <p>In Progress</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">🎯</div>
+          <div className="stat-content">
+            <h3>{stats.myTasks}</h3>
+            <p>My Tasks</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="dashboard-content">
+        {/* My Recent Tasks */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h2>My Recent Tasks</h2>
+            <a href="/my-tasks" className="view-all">View All</a>
+          </div>
+          <TaskList tasks={myRecentTasks} users={users} projects={projects} />
+        </section>
+
+        {/* All Projects */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h2>All Projects</h2>
+            <span className="project-count">{projects.length} projects</span>
+          </div>
+          <ProjectList projects={projects} users={users} />
+        </section>
+
+        {/* Recent Activity */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h2>Recent Activity</h2>
+          </div>
+          <div className="activity-list">
+            <div className="activity-item">
+              <span className="activity-icon">➕</span>
+              <div className="activity-content">
+                <p>New task "Design homepage layout" was created</p>
+                <span className="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            <div className="activity-item">
+              <span className="activity-icon">✅</span>
+              <div className="activity-content">
+                <p>Task "Create marketing materials" was completed</p>
+                <span className="activity-time">1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
