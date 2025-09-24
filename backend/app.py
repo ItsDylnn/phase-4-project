@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from datetime import datetime
 from threading import Thread
+from flask_migrate import Migrate
 import os
 
 from models import Project
@@ -24,6 +25,7 @@ app.config["MAIL_PASSWORD"] = "your_email_password"
 app.config["MAIL_DEFAULT_SENDER"] = "your_email@gmail.com"
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 
 class Project(db.Model):

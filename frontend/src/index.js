@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.css'
+
 import App from './App';
 
 // Create root and render the App component
@@ -13,19 +14,15 @@ root.render(
 );
 
 // Optional: Performance monitoring
-// You can add performance monitoring here if needed
-
-const reportWebVitals = (onPerfEntry) => {
+const reportWebVitals = async (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(onPerfEntry);
-      getFID(onPerfEntry);
-      getFCP(onPerfEntry);
-      getLCP(onPerfEntry);
-      getTTFB(onPerfEntry);
-    });
+    const { onCLS, onFCP, onLCP, onTTFB, onINP } = await import('web-vitals');
+    onCLS(onPerfEntry);
+    onFCP(onPerfEntry);
+    onLCP(onPerfEntry);
+    onTTFB(onPerfEntry);
+    onINP(onPerfEntry); // replaces onFID
   }
 };
 
 reportWebVitals(console.log);
-*/

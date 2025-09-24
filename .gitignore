@@ -1,1 +1,8 @@
 backend/app.db 
+node_modules/
+venv/
+
+dist/
+build/
+
+.env
