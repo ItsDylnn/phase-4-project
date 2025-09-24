@@ -6,7 +6,7 @@ import ProjectDetailPage from './pages/ProjectDetailPage';
 import MyTasks from './pages/MyTasks';
 import Team from './pages/Team';
 import { AuthProvider } from './context/AuthContext';
-import './index.css'
+import './styles/App.css'
 
 function App() {
   // Mock data for development
