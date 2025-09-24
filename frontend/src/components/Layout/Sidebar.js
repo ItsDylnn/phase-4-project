@@ -12,19 +12,31 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header">
-        <h3>Navigation</h3>
+      <div className="sidebar-logo">
+        <span className="logo-icon">🚀</span>
+        <span className="logo-text">TaskTrail</span>
       </div>
-      <ul className="sidebar-menu">
-        {menuItems.map(item => (
-          <li key={item.path} className={location.pathname === item.path ? 'sidebar-item active' : 'sidebar-item'}>
-            <Link to={item.path}>
-              <span className="sidebar-icon">{item.icon}</span>
-              <span className="sidebar-label">{item.label}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      
+      <nav className="sidebar-nav-container">
+        <ul className="sidebar-nav">
+          {menuItems.map(item => (
+            <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+              <Link to={item.path}>
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="user-profile">
+        <div className="user-avatar">WT</div>
+        <div className="user-details">
+          <div className="user-name">Wayne Travis</div>
+          <div className="user-email">wayne@example.com</div>
+        </div>
+      </div>
     </aside>
   );
 };
