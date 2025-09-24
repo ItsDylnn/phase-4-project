@@ -3,18 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-// Create root and render the App component
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 
-// Optional: Performance monitoring
-// You can add performance monitoring here if needed
-
+// Optional: Web Vitals (performance monitoring)
 const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
@@ -27,5 +23,3 @@ const reportWebVitals = (onPerfEntry) => {
   }
 };
 
-reportWebVitals(console.log);
-*/
