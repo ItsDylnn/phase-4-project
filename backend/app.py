@@ -6,6 +6,8 @@ from datetime import datetime
 from threading import Thread
 import os
 
+from models import Project
+import os
 
 app = Flask(__name__)
 CORS(app)
