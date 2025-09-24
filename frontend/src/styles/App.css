@@ -194,16 +194,26 @@ body {
 /* =================================
    DASHBOARD PAGE STYLING
    ================================= */
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
 .dashboard-header h1 {
   font-size: 2.2rem;
-  font-weight: 600;
-  margin-top: 0;
   color: #2c3e50;
+  margin-bottom: 10px;
 }
 
 .dashboard-header p {
   color: #7f8c8d;
-  margin-bottom: 30px;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 /* Stats Grid */
@@ -216,143 +226,155 @@ body {
 
 .stat-card {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 25px;
   display: flex;
   align-items: center;
-  transition: transform 0.2s;
-  border-left: 5px solid #3498db;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .stat-icon {
   font-size: 2.5rem;
-  margin-right: 15px;
+  margin-right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(52, 152, 219, 0.1);
   color: #3498db;
 }
 
 .stat-content h3 {
-  font-size: 1.8rem;
-  margin: 0;
+  font-size: 2rem;
+  margin: 0 0 5px 0;
   color: #2c3e50;
 }
 
 .stat-content p {
   margin: 0;
   color: #7f8c8d;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
-/* Dashboard Sections */
+/* Dashboard Content Layout */
 .dashboard-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
+  margin-bottom: 40px;
 }
 
 .dashboard-section {
   background: white;
+  border-radius: 12px;
   padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .section-header h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
   margin: 0;
+  font-size: 1.4rem;
   color: #2c3e50;
 }
 
 .view-all, .project-count {
-  font-size: 0.9rem;
   color: #3498db;
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
 }
 
-/* Project List in Dashboard */
+.view-all:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Project List */
 .project-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 15px;
-  list-style: none;
-  padding: 0;
 }
 
 .project-card {
-  background: #fcfcfc;
   border: 1px solid #eee;
-  padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-  transition: all 0.2s;
+  padding: 20px;
+  transition: all 0.3s ease;
 }
 
 .project-card:hover {
-  border-color: #3498db;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .project-title {
+  margin: 0;
   font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.project-title a {
   color: #2c3e50;
-  text-decoration: none;
 }
 
-.project-status {
-  display: inline-block;
-  padding: 4px 8px;
+.project-meta {
+  display: flex;
+  gap: 15px;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #f0f0f0;
   border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-left: 10px;
+  margin: 15px 0;
+  overflow: hidden;
 }
 
-/* Status Colors */
-.status-in-progress {
-  background-color: #f39c1230;
-  color: #f39c12;
+.progress-fill {
+  height: 100%;
+  background: #3498db;
+  border-radius: 4px;
+  transition: width 0.5s ease;
 }
 
-.status-planning {
-  background-color: #3498db30;
-  color: #3498db;
-}
-
-.status-completed {
-  background-color: #2ecc7130;
-  color: #2ecc71;
-}
-
-/* Recent Activity Styling */
+/* Activity List */
 .activity-list {
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
 .activity-item {
   display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #f5f5f5;
   align-items: flex-start;
-  padding: 10px 0;
-  border-bottom: 1px dashed #ecf0f1;
 }
 
 .activity-item:last-child {
@@ -362,19 +384,50 @@ body {
 .activity-icon {
   font-size: 1.2rem;
   margin-right: 15px;
-  padding-top: 3px;
-  color: #3498db;
+  margin-top: 2px;
+  width: 24px;
+  text-align: center;
+}
+
+.activity-content {
+  flex: 1;
 }
 
 .activity-content p {
-  margin: 0 0 2px 0;
-  font-size: 1rem;
-  color: #555;
+  margin: 0 0 5px 0;
+  color: #2c3e50;
 }
 
 .activity-time {
-  font-size: 0.8rem;
   color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-section {
+    padding: 15px;
+  }
 }
 
 /* =================================
