@@ -1,10 +1,32 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const location = useLocation();
-  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/signin');
+  };
 
   return (
     <nav className="navbar">
@@ -37,11 +59,36 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="user-info">
-          <div className="user-avatar">
-            {currentUser?.name?.split(' ').map(n => n[0]).join('')}
+        <div className="user-menu" ref={dropdownRef}>
+          <div 
+            className="user-info" 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            <div className="user-avatar">
+              {currentUser?.name?.split(' ').map(n => n[0]).join('')}
+            </div>
+            <span className="user-name">{currentUser?.name}</span>
+            <span className={`dropdown-arrow ${isDropdownOpen ? 'up' : 'down'}`}>▼</span>
           </div>
-          <span className="user-name">{currentUser?.name}</span>
+          
+          {isDropdownOpen && (
+            <div className="dropdown-menu">
+              <Link 
+                to="/profile" 
+                className="dropdown-item"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <span className="dropdown-icon">👤</span> My Profile
+              </Link>
+              <div className="dropdown-divider"></div>
+              <button 
+                className="dropdown-item"
+                onClick={handleLogout}
+              >
+                <span className="dropdown-icon">🚪</span> Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

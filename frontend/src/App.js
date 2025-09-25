@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import MyTasks from './pages/MyTasks';
 import Team from './pages/Team';
+import Profile from './pages/Profile';
 import { AuthProvider } from './context/AuthContext';
 import './styles/App.css';
 
@@ -115,6 +116,11 @@ function App() {
                 <Team 
                   users={mockUsers} 
                   projects={mockProjects} 
+                />
+              } />
+              <Route path="/profile" element={
+                <Profile 
+                  users={mockUsers}
                 />
               } />
             </Routes>
