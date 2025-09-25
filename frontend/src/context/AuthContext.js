@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({
     id: 1,
     name: 'Wayne Travis',
-    email: 'wayne.travis@student.moringaschool.com',
+    email: 'waynetravis@gmail.com',
     role: 'project_manager'
   });
 
