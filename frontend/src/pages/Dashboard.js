@@ -1,10 +1,10 @@
-import React from 'react';
-import ProjectList from '../components/Projects/ProjectList';
-import TaskList from '../components/Tasks/TaskList';
-import { useAuth } from '../context/AuthContext';
+import React from 'react'
+import ProjectList from '../components/Projects/ProjectList'
+import TaskList from '../components/Tasks/TaskList'
+import { useAuth } from '../context/AuthContext'
 
-const Dashboard = ({ projects, tasks, users }) => {
-  const { currentUser } = useAuth();
+const Dashboard = ({ projects, tasks, setTasks, users }) => {
+  const { currentUser } = useAuth()
   
   const stats = {
     totalProjects: projects.length,
@@ -12,12 +12,12 @@ const Dashboard = ({ projects, tasks, users }) => {
     completedTasks: tasks.filter(task => task.status === 'Completed').length,
     inProgressTasks: tasks.filter(task => task.status === 'In Progress').length,
     myTasks: tasks.filter(task => task.assignee_id === currentUser.id).length
-  };
+  }
 
-  const recentTasks = tasks.slice(0, 5);
+  const recentTasks = tasks.slice(0, 5)
   const myRecentTasks = tasks
     .filter(task => task.assignee_id === currentUser.id)
-    .slice(0, 3);
+    .slice(0, 3)
 
   return (
     <div className="dashboard">
@@ -65,7 +65,12 @@ const Dashboard = ({ projects, tasks, users }) => {
             <h2>My Recent Tasks</h2>
             <a href="/my-tasks" className="view-all">View All</a>
           </div>
-          <TaskList tasks={myRecentTasks} users={users} projects={projects} />
+          <TaskList 
+            tasks={myRecentTasks} 
+            setTasks={setTasks}   
+            users={users} 
+            projects={projects} 
+          />
         </section>
 
         {/* All Projects */}
@@ -101,7 +106,7 @@ const Dashboard = ({ projects, tasks, users }) => {
         </section>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

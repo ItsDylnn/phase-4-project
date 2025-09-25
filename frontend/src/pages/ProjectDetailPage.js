@@ -1,12 +1,12 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import ProjectDetail from '../components/Projects/ProjectDetail';
-import TaskList from '../components/Tasks/TaskList';
-import TaskForm from '../components/Tasks/TaskForm';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import ProjectDetail from '../components/Projects/ProjectDetail'
+import TaskList from '../components/Tasks/TaskList'
+import TaskForm from '../components/Tasks/TaskForm'
 
 const ProjectDetailPage = ({ projects, tasks, users }) => {
-  const { id } = useParams();
-  const project = projects.find(p => p.id === parseInt(id));
+  const { id } = useParams()
+  const project = projects.find(p => p.id === parseInt(id))
   
   if (!project) {
     return (
@@ -15,15 +15,15 @@ const ProjectDetailPage = ({ projects, tasks, users }) => {
         <p>The project you're looking for doesn't exist.</p>
         <a href="/" className="btn btn-primary">Back to Dashboard</a>
       </div>
-    );
+    )
   }
 
-  const projectTasks = tasks.filter(task => task.project_id === parseInt(id));
+  const projectTasks = tasks.filter(task => task.project_id === parseInt(id))
 
   const handleTaskCreate = (taskData) => {
-    console.log('Creating task for project:', project.id, taskData);
+    console.log('Creating task for project:', project.id, taskData)
     // This will be connected to the API later
-  };
+  }
 
   return (
     <div className="project-detail-page">
@@ -44,7 +44,7 @@ const ProjectDetailPage = ({ projects, tasks, users }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectDetailPage;
+export default ProjectDetailPage

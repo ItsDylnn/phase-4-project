@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import TaskList from '../components/Tasks/TaskList';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from 'react'
+import TaskList from '../components/Tasks/TaskList'
+import { useAuth } from '../context/AuthContext'
 
-const MyTasks = ({ tasks, users, projects }) => {
-  const { currentUser } = useAuth();
-  const [filter, setFilter] = useState('all');
+const MyTasks = ({ tasks, setTasks, users, projects }) => {
+  const { currentUser } = useAuth()
+  const [filter, setFilter] = useState('all')
   
-  const myTasks = tasks.filter(task => task.assignee_id === currentUser.id);
+  const myTasks = tasks.filter(task => task.assignee_id === currentUser.id)
   
   const filteredTasks = myTasks.filter(task => {
-    if (filter === 'all') return true;
-    return task.status === filter;
-  });
+    if (filter === 'all') return true
+    return task.status === filter
+  })
 
   const taskStats = {
     all: myTasks.length,
     'Not Started': myTasks.filter(task => task.status === 'Not Started').length,
     'In Progress': myTasks.filter(task => task.status === 'In Progress').length,
     'Completed': myTasks.filter(task => task.status === 'Completed').length
-  };
+  }
 
   return (
     <div className="my-tasks-page">
@@ -61,7 +61,13 @@ const MyTasks = ({ tasks, users, projects }) => {
 
       {/* Task List */}
       <div className="tasks-container">
-        <TaskList tasks={filteredTasks} users={users} projects={projects} />
+         <TaskList 
+            tasks={filteredTasks} 
+            setTasks={setTasks}   
+            users={users} 
+            projects={projects} 
+/>
+
       </div>
 
       {filteredTasks.length === 0 && (
@@ -77,7 +83,7 @@ const MyTasks = ({ tasks, users, projects }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MyTasks;
+export default MyTasks

@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   const menuItems = [
     { path: '/', icon: '📊', label: 'Dashboard' },
     { path: '/my-tasks', icon: '✅', label: 'My Tasks' },
     { path: '/team', icon: '👥', label: 'Team' }
-  ];
+  ]
 
   return (
     <aside className="sidebar">
@@ -38,7 +38,7 @@ const Sidebar = () => {
         </div>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

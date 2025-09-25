@@ -1,42 +1,42 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react'
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider')
   }
-  return context;
-};
+  return context
+}
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({
     id: 1,
     name: 'Wayne Travis',
-    email: 'wayne.travis@student.moringaschool.com',
+    email: 'waynetravis@gmail.com',
     role: 'project_manager'
-  });
+  })
 
   const login = (userData) => {
-    setCurrentUser(userData);
-  };
+    setCurrentUser(userData)
+  }
 
   const logout = () => {
-    setCurrentUser(null);
-  };
+    setCurrentUser(null)
+  }
 
   const value = {
     currentUser,
     login,
     logout
-  };
+  }
 
   return (
     <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
-export default AuthContext;
+export default AuthContext

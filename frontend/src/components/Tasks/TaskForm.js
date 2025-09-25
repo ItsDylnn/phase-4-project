@@ -1,6 +1,6 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import React from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 
 const TaskSchema = Yup.object().shape({
   title: Yup.string()
@@ -20,17 +20,17 @@ const TaskSchema = Yup.object().shape({
     .required('Project is required'),
   assignee_id: Yup.number()
     .required('Assignee is required')
-});
+})
 
 const TaskForm = ({ projects, users, onSubmit }) => {
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    console.log('Creating task:', values);
+    console.log('Creating task:', values)
     if (onSubmit) {
-      onSubmit(values);
+      onSubmit(values)
     }
-    setSubmitting(false);
-    resetForm();
-  };
+    setSubmitting(false)
+    resetForm()
+  }
 
   return (
     <div className="task-form-container">
@@ -158,7 +158,7 @@ const TaskForm = ({ projects, users, onSubmit }) => {
         )}
       </Formik>
     </div>
-  );
-};
+  )
+}
 
-export default TaskForm;
+export default TaskForm

@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Profile.css';
+import React, { useState, useContext } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import '../styles/Profile.css'
 
 const Profile = () => {
-  const { currentUser, updateUser } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser, updateUser } = useAuth()
+  const navigate = useNavigate()
   
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
@@ -13,36 +13,36 @@ const Profile = () => {
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
-  });
+  })
   
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+    e.preventDefault()
+    setError('')
+    setSuccess('')
     
     if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
-      return setError('New passwords do not match');
+      return setError('New passwords do not match')
     }
 
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       // In a real app, you would make an API call here
-      // await updateUser(formData);
+      // await updateUser(formData)
       
       // For demo purposes, we'll just show a success message
-      setSuccess('Profile updated successfully!');
+      setSuccess('Profile updated successfully!')
       
       // Clear password fields
       setFormData(prev => ({
@@ -50,17 +50,17 @@ const Profile = () => {
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
-      }));
+      }))
       
       // Refresh user data
-      // await refreshUser();
+      // await refreshUser()
       
     } catch (err) {
-      setError(err.message || 'Failed to update profile');
+      setError(err.message || 'Failed to update profile')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="profile-container">
@@ -166,7 +166,7 @@ const Profile = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

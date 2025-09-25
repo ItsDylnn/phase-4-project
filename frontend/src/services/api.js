@@ -1,13 +1,13 @@
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5555/api';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5555/api'
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(error || `HTTP error! status: ${response.status}`);
+    const error = await response.text()
+    throw new Error(error || `HTTP error! status: ${response.status}`)
   }
-  return response.json();
-};
+  return response.json()
+}
 
 // API service object
 export const api = {
@@ -84,7 +84,7 @@ export const api = {
 
   // Utility function for testing connection
   healthCheck: () => fetch(`${API_BASE}/health`).then(handleResponse).catch(() => ({ status: 'API not available' }))
-};
+}
 
 // Alternative: Simpler version if you prefer
 export const simpleApi = {
@@ -119,7 +119,7 @@ export const simpleApi = {
 
   // DELETE resources
   deleteTask: (id) => fetch(`${API_BASE}/tasks/${id}`, { method: 'DELETE' })
-};
+}
 
 // Mock data functions for development (when backend is not ready)
 export const mockApi = {
@@ -169,62 +169,62 @@ export const mockApi = {
   ],
 
   createTask: async (taskData) => {
-    console.log('Creating task:', taskData);
-    return { id: Date.now(), ...taskData, created_at: new Date().toISOString() };
+    console.log('Creating task:', taskData)
+    return { id: Date.now(), ...taskData, created_at: new Date().toISOString() }
   },
 
   updateTask: async (id, taskData) => {
-    console.log('Updating task:', id, taskData);
-    return { id, ...taskData, updated_at: new Date().toISOString() };
+    console.log('Updating task:', id, taskData)
+    return { id, ...taskData, updated_at: new Date().toISOString() }
   }
-};
+}
 
 // Smart API that falls back to mock data if real API is unavailable
 export const smartApi = {
   async getUsers() {
     try {
-      return await api.users.getAll();
+      return await api.users.getAll()
     } catch (error) {
-      console.log('API unavailable, using mock data');
-      return await mockApi.getUsers();
+      console.log('API unavailable, using mock data')
+      return await mockApi.getUsers()
     }
   },
 
   async getProjects() {
     try {
-      return await api.projects.getAll();
+      return await api.projects.getAll()
     } catch (error) {
-      console.log('API unavailable, using mock data');
-      return await mockApi.getProjects();
+      console.log('API unavailable, using mock data')
+      return await mockApi.getProjects()
     }
   },
 
   async getTasks() {
     try {
-      return await api.tasks.getAll();
+      return await api.tasks.getAll()
     } catch (error) {
-      console.log('API unavailable, using mock data');
-      return await mockApi.getTasks();
+      console.log('API unavailable, using mock data')
+      return await mockApi.getTasks()
     }
   },
 
   async createTask(taskData) {
     try {
-      return await api.tasks.create(taskData);
+      return await api.tasks.create(taskData)
     } catch (error) {
-      console.log('API unavailable, using mock create');
-      return await mockApi.createTask(taskData);
+      console.log('API unavailable, using mock create')
+      return await mockApi.createTask(taskData)
     }
   },
 
   async updateTask(id, taskData) {
     try {
-      return await api.tasks.update(id, taskData);
+      return await api.tasks.update(id, taskData)
     } catch (error) {
-      console.log('API unavailable, using mock update');
-      return await mockApi.updateTask(id, taskData);
+      console.log('API unavailable, using mock update')
+      return await mockApi.updateTask(id, taskData)
     }
   }
-};
+}
 
-export default api;
+export default api

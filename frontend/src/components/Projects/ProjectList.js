@@ -1,5 +1,5 @@
-import React from 'react';
-import ProjectCard from './ProjectCard';
+import React from 'react'
+import ProjectCard from './ProjectCard'
 
 const ProjectList = ({ projects, users }) => {
   if (projects.length === 0) {
@@ -7,7 +7,7 @@ const ProjectList = ({ projects, users }) => {
       <div className="empty-state">
         <p>No projects found. Create your first project to get started!</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -16,7 +16,7 @@ const ProjectList = ({ projects, users }) => {
         <ProjectCard key={project.id} project={project} users={users} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default ProjectList;
+export default ProjectList

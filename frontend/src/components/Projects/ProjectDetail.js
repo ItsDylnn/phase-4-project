@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 const ProjectDetail = ({ project, users, tasks }) => {
-  const manager = users.find(user => user.id === project.manager_id);
-  const projectTasks = tasks.filter(task => task.project_id === project.id);
+  const manager = users.find(user => user.id === project.manager_id)
+  const projectTasks = tasks.filter(task => task.project_id === project.id)
 
   const taskStats = {
     total: projectTasks.length,
     completed: projectTasks.filter(task => task.status === 'Completed').length,
     inProgress: projectTasks.filter(task => task.status === 'In Progress').length,
     notStarted: projectTasks.filter(task => task.status === 'Not Started').length
-  };
+  }
 
   return (
     <div className="project-detail">
@@ -59,7 +59,7 @@ const ProjectDetail = ({ project, users, tasks }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectDetail;
+export default ProjectDetail

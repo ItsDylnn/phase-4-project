@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ProjectCard = ({ project, users }) => {
-  const manager = users.find(user => user.id === project.manager_id);
-  const tasksCount = 5; // This would come from actual data
+  const manager = users.find(user => user.id === project.manager_id)
+  const tasksCount = 5 // This would come from actual data
   
   const getProgressColor = (progress) => {
-    if (progress >= 70) return '#2ecc71';
-    if (progress >= 40) return '#f39c12';
-    return '#e74c3c';
-  };
+    if (progress >= 70) return '#2ecc71'
+    if (progress >= 40) return '#f39c12'
+    return '#e74c3c'
+  }
 
   return (
     <div className="project-card">
@@ -49,7 +49,7 @@ const ProjectCard = ({ project, users }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectCard;
+export default ProjectCard

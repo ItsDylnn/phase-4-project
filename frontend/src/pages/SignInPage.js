@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const SignInPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useAuth(); // Get the login function from context
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { login } = useAuth() // Get the login function from context
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     // In a real app, you would send this to the backend
     // For now, we will use the mock login
-    login(email, password);
-  };
+    login(email, password)
+  }
 
   return (
     <div className="signin-page-container">
@@ -49,7 +49,7 @@ const SignInPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignInPage;
+export default SignInPage

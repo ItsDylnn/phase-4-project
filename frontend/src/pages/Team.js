@@ -1,5 +1,5 @@
-import React from 'react';
-import TeamMember from '../components/Team/TeamMember';
+import React from 'react'
+import TeamMember from '../components/Team/TeamMember'
 
 const Team = ({ users, projects }) => {
   const groupedUsers = {
@@ -7,7 +7,7 @@ const Team = ({ users, projects }) => {
     leads: users.filter(user => user.role === 'team_lead'),
     developers: users.filter(user => user.role === 'developer'),
     designers: users.filter(user => user.role === 'designer')
-  };
+  }
 
   return (
     <div className="team-page">
@@ -56,7 +56,7 @@ const Team = ({ users, projects }) => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Team;
+export default Team
