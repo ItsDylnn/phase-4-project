@@ -1,15 +1,35 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
 import Dashboard from './pages/Dashboard';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import MyTasks from './pages/MyTasks';
 import Team from './pages/Team';
 import Profile from './pages/Profile';
-import { AuthProvider } from './context/AuthContext';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import './styles/App.css';
 
-function App() {
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { currentUser } = useAuth();
+  
+  if (!currentUser) {
+    return <Navigate to="/signin" replace />;
+  }
+  
+  return (
+    <>
+      <Navbar />
+      <main className="main-content">
+        {children}
+      </main>
+    </>
+  );
+};
+
+function AppContent() {
   // Mock data for development
   const mockUsers = [
     { id: 1, name: 'Wayne Travis', email: 'wayne@example.com', role: 'project_manager' },
@@ -85,47 +105,84 @@ function App() {
   ];
 
   return (
+    <div className="App">
+      <Routes>
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route
+          path="/"
+          element={
+            <Navigate to="/signin" replace />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard 
+                projects={mockProjects} 
+                tasks={mockTasks} 
+                users={mockUsers} 
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/projects/:id"
+          element={
+            <ProtectedRoute>
+              <ProjectDetailPage 
+                projects={mockProjects} 
+                tasks={mockTasks} 
+                users={mockUsers} 
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-tasks"
+          element={
+            <ProtectedRoute>
+              <MyTasks 
+                tasks={mockTasks} 
+                users={mockUsers} 
+                projects={mockProjects} 
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/team"
+          element={
+            <ProtectedRoute>
+              <Team 
+                users={mockUsers} 
+                projects={mockProjects} 
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile 
+                users={mockUsers}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/signin" replace />} />
+      </Routes>
+    </div>
+  );
+}
+
+function App() {
+  return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <Navbar />
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={
-                <Dashboard 
-                  projects={mockProjects} 
-                  tasks={mockTasks} 
-                  users={mockUsers} 
-                />
-              } />
-              <Route path="/projects/:id" element={
-                <ProjectDetailPage 
-                  projects={mockProjects} 
-                  tasks={mockTasks} 
-                  users={mockUsers} 
-                />
-              } />
-              <Route path="/my-tasks" element={
-                <MyTasks 
-                  tasks={mockTasks} 
-                  users={mockUsers} 
-                  projects={mockProjects} 
-                />
-              } />
-              <Route path="/team" element={
-                <Team 
-                  users={mockUsers} 
-                  projects={mockProjects} 
-                />
-              } />
-              <Route path="/profile" element={
-                <Profile 
-                  users={mockUsers}
-                />
-              } />
-            </Routes>
-          </main>
-        </div>
+        <AppContent />
       </Router>
     </AuthProvider>
   );
