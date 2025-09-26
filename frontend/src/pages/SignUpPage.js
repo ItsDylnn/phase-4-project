@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -53,7 +54,6 @@ const SignUpPage = () => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              autoComplete="name"        // ✅ autofill hint
               required
             />
           </div>
@@ -64,7 +64,6 @@ const SignUpPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"       // ✅ autofill hint
               required
             />
           </div>
@@ -75,7 +74,6 @@ const SignUpPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password" // ✅ browser knows it’s a new password
               required
             />
             <div className="password-hint">Password must be at least 6 characters long</div>
@@ -87,7 +85,6 @@ const SignUpPage = () => {
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              autoComplete="new-password" // ✅ match new password
               required
             />
           </div>

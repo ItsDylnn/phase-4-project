@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -14,69 +15,45 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user from localStorage on first render
+  // Check for existing session on initial load
   useEffect(() => {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      setCurrentUser(JSON.parse(user));
     }
     setLoading(false);
   }, []);
 
-  // ---- LOGIN ----
-  const login = async (email, password) => {
-    try {
-      const res = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include', // if backend uses cookies
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        return { success: false, message: errorData.message || 'Login failed' };
-      }
-
-      const data = await res.json();
-
-      setCurrentUser(data.user);
-      localStorage.setItem('currentUser', JSON.stringify(data.user));
-
-      return { success: true, user: data.user };
-    } catch (err) {
-      console.error('Login error:', err);
-      return { success: false, message: 'Network error' };
-    }
+  const login = (email, password) => {
+    // In a real app, you would make an API call to your backend
+    // For demo purposes, we'll use mock data
+    const mockUser = {
+      id: 1,
+      name: 'Demo User',
+      email: email,
+      role: 'user'
+    };
+    
+    setCurrentUser(mockUser);
+    localStorage.setItem('currentUser', JSON.stringify(mockUser));
+    return { success: true };
   };
 
-  // ---- SIGNUP ----
   const signup = async (name, email, password) => {
-    try {
-      const res = await fetch('http://localhost:5000/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        return { success: false, message: errorData.message || 'Signup failed' };
-      }
-
-      const data = await res.json();
-
-      setCurrentUser(data.user);
-      localStorage.setItem('currentUser', JSON.stringify(data.user));
-
-      return { success: true, user: data.user };
-    } catch (err) {
-      console.error('Signup error:', err);
-      return { success: false, message: 'Network error' };
-    }
+    // In a real app, you would make an API call to your backend
+    // For demo purposes, we'll just create a user object
+    const newUser = {
+      id: Date.now(),
+      name,
+      email,
+      role: 'user'
+    };
+    
+    setCurrentUser(newUser);
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    return { success: true };
   };
 
-  // ---- LOGOUT ----
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem('currentUser');
@@ -87,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     logout,
-    isAuthenticated: !!currentUser,
+    isAuthenticated: !!currentUser
   };
 
   return (

@@ -1,22 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Layout/Navbar';
-import Dashboard from './pages/Dashboard';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-import MyTasks from './pages/MyTasks';
-import Team from './pages/Team';
-import Profile from './pages/Profile';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import './styles/App.css';
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Navbar from './components/Layout/Navbar'
+import Dashboard from './pages/Dashboard'
+import ProjectDetailPage from './pages/ProjectDetailPage'
+import MyTasks from './pages/MyTasks'
+import Team from './pages/Team'
+import Profile from './pages/Profile'
+import SignInPage from './pages/SignInPage'
+import SignUpPage from './pages/SignUpPage'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import './styles/App.css'
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth()
   
   if (!currentUser) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/signin" replace />
   }
   
   return (
@@ -26,46 +26,12 @@ const ProtectedRoute = ({ children }) => {
         {children}
       </main>
     </>
-  );
-};
+  )
+}
 
 function AppContent() {
-  // Mock data for development
-  const mockUsers = [
-    { id: 1, name: 'Wayne Travis', email: 'wayne@example.com', role: 'project_manager' },
-    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', role: 'team_lead' },
-    { id: 3, name: 'Mike Chen', email: 'mike@example.com', role: 'developer' },
-    { id: 4, name: 'Emily Rodriguez', email: 'emily@example.com', role: 'designer' }
-  ];
-
-  const mockProjects = [
-    { 
-      id: 1, 
-      name: 'Website Redesign', 
-      description: 'Complete redesign of company website with modern UI/UX',
-      due_date: '2023-12-15',
-      manager_id: 1,
-      progress: 65
-    },
-    { 
-      id: 2, 
-      name: 'Mobile App Development', 
-      description: 'New mobile application for iOS and Android platforms',
-      due_date: '2024-01-20',
-      manager_id: 2,
-      progress: 40
-    },
-    { 
-      id: 3, 
-      name: 'Q4 Marketing Campaign', 
-      description: 'End of year marketing initiative',
-      due_date: '2023-11-30',
-      manager_id: 1,
-      progress: 20
-    }
-  ];
-
-  const mockTasks = [
+  // ✅ Put tasks into state so setTasks works
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       title: 'Design homepage layout',
@@ -102,7 +68,41 @@ function AppContent() {
       project_id: 2,
       assignee_id: 3
     }
-  ];
+  ])
+
+  const mockUsers = [
+    { id: 1, name: 'Wayne Travis', email: 'wayne@example.com', role: 'project_manager' },
+    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', role: 'team_lead' },
+    { id: 3, name: 'Mike Chen', email: 'mike@example.com', role: 'developer' },
+    { id: 4, name: 'Emily Rodriguez', email: 'emily@example.com', role: 'designer' }
+  ]
+
+  const mockProjects = [
+    { 
+      id: 1, 
+      name: 'Website Redesign', 
+      description: 'Complete redesign of company website with modern UI/UX',
+      due_date: '2023-12-15',
+      manager_id: 1,
+      progress: 65
+    },
+    { 
+      id: 2, 
+      name: 'Mobile App Development', 
+      description: 'New mobile application for iOS and Android platforms',
+      due_date: '2024-01-20',
+      manager_id: 2,
+      progress: 40
+    },
+    { 
+      id: 3, 
+      name: 'Q4 Marketing Campaign', 
+      description: 'End of year marketing initiative',
+      due_date: '2023-11-30',
+      manager_id: 1,
+      progress: 20
+    }
+  ]
 
   return (
     <div className="App">
@@ -111,9 +111,7 @@ function AppContent() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route
           path="/"
-          element={
-            <Navigate to="/signin" replace />
-          }
+          element={<Navigate to="/signin" replace />}
         />
         <Route
           path="/dashboard"
@@ -121,7 +119,8 @@ function AppContent() {
             <ProtectedRoute>
               <Dashboard 
                 projects={mockProjects} 
-                tasks={mockTasks} 
+                tasks={tasks} 
+                setTasks={setTasks}
                 users={mockUsers} 
               />
             </ProtectedRoute>
@@ -133,7 +132,8 @@ function AppContent() {
             <ProtectedRoute>
               <ProjectDetailPage 
                 projects={mockProjects} 
-                tasks={mockTasks} 
+                tasks={tasks} 
+                setTasks={setTasks}
                 users={mockUsers} 
               />
             </ProtectedRoute>
@@ -144,7 +144,8 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <MyTasks 
-                tasks={mockTasks} 
+                tasks={tasks} 
+                setTasks={setTasks}
                 users={mockUsers} 
                 projects={mockProjects} 
               />
@@ -175,7 +176,7 @@ function AppContent() {
         <Route path="*" element={<Navigate to="/signin" replace />} />
       </Routes>
     </div>
-  );
+  )
 }
 
 function App() {
@@ -185,7 +186,7 @@ function App() {
         <AppContent />
       </Router>
     </AuthProvider>
-  );
+  )
 }
 
-export default App;
+export default App

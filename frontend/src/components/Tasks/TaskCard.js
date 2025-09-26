@@ -1,7 +1,11 @@
 import React, { useState } from "react"
 
-const TaskCard = ({ task, users, projects, onDelete }) => {
+const TaskCard = ({ task, users, projects, onDelete, onUpdate }) => {
   const [currentTask, setCurrentTask] = useState(task)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editTitle, setEditTitle] = useState(task.title)
+  const [editDescription, setEditDescription] = useState(task.description)
+
   const assignee = users.find(user => user.id === currentTask.assignee_id)
   const project = projects.find(proj => proj.id === currentTask.project_id)
 
@@ -24,16 +28,48 @@ const TaskCard = ({ task, users, projects, onDelete }) => {
     return "#2ecc71"                     // On track
   }
 
-  const handleStatusChange = (newStatus) => {
-    setCurrentTask(prev => ({ ...prev, status: newStatus }))
-    // optional: send update to backend here
+  const handleStatusChange = async (newStatus) => {
+    const updated = { ...currentTask, status: newStatus }
+
+    const res = await fetch(`http://localhost:5000/tasks/${currentTask.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated),
+    })
+
+    if (res.ok) {
+      const saved = await res.json()
+      setCurrentTask(saved)
+      onUpdate(saved)   // update parent state
+    }
+  }
+
+  const handleSaveEdit = async () => {
+    const updated = { ...currentTask, title: editTitle, description: editDescription }
+
+    const res = await fetch(`http://localhost:5000/tasks/${currentTask.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated),
+    })
+
+    if (res.ok) {
+      const saved = await res.json()
+      setCurrentTask(saved)
+      onUpdate(saved)
+      setIsEditing(false)
+    }
   }
 
   return (
     <div className="task-card">
       <div className="task-header">
         <div className="task-title-section">
-          <h4 className="task-title">{currentTask.title}</h4>
+          {isEditing ? (
+            <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+          ) : (
+            <h4 className="task-title">{currentTask.title}</h4>
+          )}
           <span
             className="status-badge"
             style={{ backgroundColor: getStatusColor(currentTask.status) }}
@@ -54,7 +90,11 @@ const TaskCard = ({ task, users, projects, onDelete }) => {
         </div>
       </div>
 
-      <p className="task-description">{currentTask.description}</p>
+      {isEditing ? (
+        <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
+      ) : (
+        <p className="task-description">{currentTask.description}</p>
+      )}
 
       <div className="task-meta">
         <div className="meta-item">
@@ -67,17 +107,21 @@ const TaskCard = ({ task, users, projects, onDelete }) => {
         </div>
         <div className="meta-item">
           <span className="meta-label">Due:</span>
-          <span
-            className="due-date"
-            style={{ color: getPriorityColor() }}
-          >
+          <span className="due-date" style={{ color: getPriorityColor() }}>
             {new Date(currentTask.due_date).toLocaleDateString()}
           </span>
         </div>
       </div>
 
       <div className="task-footer">
-        <button className="btn btn-small">Edit</button>
+        {isEditing ? (
+          <>
+            <button className="btn btn-small" onClick={handleSaveEdit}>Save</button>
+            <button className="btn btn-small" onClick={() => setIsEditing(false)}>Cancel</button>
+          </>
+        ) : (
+          <button className="btn btn-small" onClick={() => setIsEditing(true)}>Edit</button>
+        )}
         <button
           className="btn btn-small btn-danger"
           onClick={() => onDelete(currentTask.id)}

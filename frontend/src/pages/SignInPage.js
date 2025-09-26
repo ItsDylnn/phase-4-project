@@ -23,7 +23,7 @@ const SignInPage = () => {
       const result = await login(email, password);
       
       if (result.success) {
-        navigate('/');
+        navigate('/dashboard');
       } else {
         setError('Failed to sign in. Please check your credentials.');
       }
@@ -48,7 +48,6 @@ const SignInPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="username"   // ✅ helps autofill
               required
             />
           </div>
@@ -59,7 +58,6 @@ const SignInPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"   // ✅ helps autofill
               required
             />
           </div>
@@ -72,7 +70,7 @@ const SignInPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SignInPage;
