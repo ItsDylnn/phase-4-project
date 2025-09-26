@@ -10,8 +10,8 @@ TaskTrail is a modern, full-stack project management application designed to hel
 - **Task Tracking**: Manage tasks with different statuses and priorities
 - **Team Collaboration**: Add team members and assign tasks
 - **User Authentication**: Secure login and registration system
-- **Responsive Design**: Works on desktop and mobile devices
 - **Real-time Updates**: Stay in sync with your team's progress
+- **Responsive Design**: Works on desktop and mobile devices
 
 ## 🚀 Tech Stack
 
@@ -19,249 +19,124 @@ TaskTrail is a modern, full-stack project management application designed to hel
 - React.js
 - React Router for navigation
 - Context API for state management
-- Tailwind CSS for styling
+- Formik & Yup for form handling and validation
 - Axios for API requests
-- React Icons
+- Tailwind CSS for styling
 
 ### Backend
-- Node.js with Express
-- JSON Server for mock API (development)
+- Python Flask
+- SQLAlchemy ORM
+- Flask-Migrate for database migrations
+- SQLite (Development) / PostgreSQL (Production)
 - JWT for authentication
 
-### Development Tools
-- npm / yarn
-- ESLint for code quality
-- Prettier for code formatting
-- Git for version control
-
-## 🚀 Getting Started
+## �️ Installation
 
 ### Prerequisites
-
 - Node.js (v14 or later)
-- npm (comes with Node.js)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/phase-4-project.git
-   cd phase-4-project
-   ```
-
-2. Install dependencies for both backend and frontend:
-   ```bash
-   # Install root dependencies (including JSON Server)
-   npm install
-   
-   # Install frontend dependencies
-   cd frontend
-   npm install
-   cd ..
-   ```
-
-### Running the Application
-
-#### Option 1: Run Frontend and Backend Separately
-
-1. Start the JSON Server (backend):
-   ```bash
-   # From the project root directory
-   npm run server
-   ```
-   The server will run on http://localhost:5555
-
-2. In a new terminal, start the React development server:
-   ```bash
-   # From the project root directory
-   npm run client
-   ```
-   The frontend will be available at http://localhost:3000
-
-#### Option 2: Run Both Servers Concurrently
-
-From the project root directory, run:
-```bash
-npm run dev
-```
-
-This will start both the JSON Server and the React development server simultaneously.
-
-### Available API Endpoints
-
-The JSON Server provides the following RESTful endpoints:
-
-- `GET /tasks` - Get all tasks
-- `GET /tasks/:id` - Get a single task
-- `POST /tasks` - Create a new task
-- `PUT /tasks/:id` - Update a task
-- `PATCH /tasks/:id` - Partially update a task
-- `DELETE /tasks/:id` - Delete a task
-
-Similar endpoints are available for other resources like projects, users, etc.
-
-## 🔧 Project Structure
-
-```
-phase-4-project/
-├── frontend/               # React frontend
-│   ├── public/            # Static files
-│   ├── src/               # React source code
-│   │   ├── components/    # Reusable UI components
-│   │   ├── pages/         # Page components
-│   │   ├── services/      # API services
-│   │   └── App.js         # Main application component
-│   └── package.json       # Frontend dependencies
-├── db.json                # JSON Server database
-├── server.js              # JSON Server configuration
-└── package.json           # Root dependencies and scripts
-```
-
-## 🛠️ Installation
-
-### Prerequisites
-- Node.js (v14 or higher)
-- npm (v6 or higher) or yarn
-- Git
+- Python (3.8 or later)
+- pip (Python package manager)
 
 ### Setup Instructions
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/phase-4-project.git
+   git clone https://github.com/ItsDylnn/phase-4-project.git
    cd phase-4-project
    ```
 
-2. **Install dependencies**
+2. **Set up the backend**
    ```bash
-   # Install backend dependencies
-   cd backend
-   npm install
-   
-   # Install frontend dependencies
-   cd ../frontend
-   npm install
+   # Create and activate a virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+   # Install Python dependencies
+   pip install -r backend/requirements.txt
    ```
 
-3. **Set up environment variables**
-   Create a `.env` file in the backend directory:
-   ```env
-   PORT=5000
-   JWT_SECRET=your_jwt_secret_here
-   NODE_ENV=development
+3. **Set up the frontend**
+   ```bash
+   cd frontend
+   npm install
+   cd ..
+   ```
+
+4. **Configure environment variables**
+   Create a `.env` file in the root directory:
+   ```
+   FLASK_APP=backend/app.py
+   FLASK_ENV=development
+   SECRET_KEY=your-secret-key-here
+   DATABASE_URL=sqlite:///app.db
    ```
 
 ## 🚀 Running the Application
 
-### Development Mode
-
 1. **Start the backend server**
    ```bash
-   # From the project root
-   cd backend
-   npm run dev
+   # From the project root directory
+   flask run
    ```
+   The backend will be available at http://localhost:5000
 
 2. **Start the frontend development server**
    ```bash
-   # From the project root
+   # From the frontend directory
    cd frontend
    npm start
    ```
+   The frontend will be available at http://localhost:3000
 
-3. **Start JSON Server (for mock data)**
-   ```bash
-   # From the project root
-   npx json-server --watch db.json --port 3001
-   ```
+## 📚 API Endpoints
 
-   The application should now be running at `http://localhost:3000`
+### Authentication
+- `POST /api/signup` - Register a new user
+- `POST /api/login` - Login user and get JWT token
 
-### Production Build
+### Projects
+- `GET /api/projects` - Get all projects
+- `POST /api/projects` - Create a new project
+- `GET /api/projects/<id>` - Get a specific project
+- `PATCH /api/projects/<id>` - Update a project
+- `DELETE /api/projects/<id>` - Delete a project
 
-```bash
-# Build the frontend for production
-cd frontend
-npm run build
+### Tasks
+- `GET /api/tasks` - Get all tasks
+- `POST /api/tasks` - Create a new task
+- `GET /api/tasks/<id>` - Get a specific task
+- `PATCH /api/tasks/<id>` - Update a task
+- `DELETE /api/tasks/<id>` - Delete a task
 
-# Serve the production build
-npm install -g serve
-serve -s build
-```
-
-## 📁 Project Structure
+## 🏗️ Project Structure
 
 ```
 phase-4-project/
-├── backend/               # Backend server code
-│   ├── config/           # Configuration files
-│   ├── controllers/      # Route controllers
-│   ├── middleware/       # Custom middleware
-│   ├── models/           # Database models
-│   ├── routes/           # API routes
-│   ├── utils/            # Utility functions
-│   ├── app.js            # Express app setup
-│   └── server.js         # Server entry point
-│
-├── frontend/             # Frontend React application
-│   ├── public/           # Static files
-│   └── src/
-│       ├── assets/       # Images, fonts, etc.
-│       ├── components/   # Reusable UI components
-│       ├── context/      # React context providers
-│       ├── pages/        # Page components
-│       ├── services/     # API services
-│       ├── styles/       # Global styles
-│       ├── App.js        # Main App component
-│       └── index.js      # Entry point
-│
-├── .gitignore           # Git ignore file
-└── README.md            # This file
+├── backend/                  # Flask backend
+│   ├── migrations/          # Database migrations
+│   ├── routes/              # API routes
+│   ├── models.py            # Database models
+│   ├── app.py               # Flask application
+│   └── requirements.txt     # Python dependencies
+├── frontend/                # React frontend
+│   ├── public/              # Static files
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── context/         # React context providers
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API services
+│   │   ├── App.js           # Main application component
+│   │   └── index.js         # Application entry point
+│   └── package.json         # Frontend dependencies
+├── .gitignore              # Git ignore file
+├── README.md               # Project documentation
+└── requirements.txt        # Backend dependencies
 ```
-
-## 🔒 Environment Variables
-
-### Backend
-- `PORT`: Port number for the backend server (default: 5000)
-- `JWT_SECRET`: Secret key for JWT token generation
-- `NODE_ENV`: Environment (development/production)
-
-### Frontend
-- `REACT_APP_API_URL`: Base URL for API requests (default: http://localhost:5000)
-
-## 🧪 Testing
-
-Run tests for the frontend:
-```bash
-cd frontend
-npm test
-```
-
-## 🌐 Deployment
-
-### Backend Deployment
-1. Set up a production database (MongoDB, PostgreSQL, etc.)
-2. Update environment variables for production
-3. Use PM2 or similar process manager:
-   ```bash
-   npm install -g pm2
-   pm2 start server.js --name "tasktrail-backend"
-   ```
-
-### Frontend Deployment
-1. Build the production version:
-   ```bash
-   cd frontend
-   npm run build
-   ```
-2. Deploy the `build` folder to your preferred hosting (Vercel, Netlify, etc.)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
-
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
@@ -273,6 +148,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - [Create React App](https://create-react-app.dev/)
+- [Flask](https://flask.palletsprojects.com/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
-- [JSON Server](https://github.com/typicode/json-server)
