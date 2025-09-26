@@ -104,6 +104,8 @@ function AppContent() {
     }
   ];
 
+  const { currentUser } = useAuth();
+
   return (
     <div className="App">
       <Routes>
@@ -112,7 +114,11 @@ function AppContent() {
         <Route
           path="/"
           element={
-            <Navigate to="/signin" replace />
+            currentUser ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/signin" replace />
+            )
           }
         />
         <Route
