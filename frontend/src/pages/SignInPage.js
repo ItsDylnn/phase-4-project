@@ -1,25 +1,46 @@
-import React, { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import '../styles/Auth.css';
 
 const SignInPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { login } = useAuth() // Get the login function from context
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // In a real app, you would send this to the backend
-    // For now, we will use the mock login
-    login(email, password)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      setError('');
+      setLoading(true);
+      
+      const result = await login(email, password);
+      
+      if (result.success) {
+        navigate('/');
+      } else {
+        setError('Failed to sign in. Please check your credentials.');
+      }
+    } catch (err) {
+      setError('Failed to sign in. Please try again.');
+    }
+    
+    setLoading(false);
+  };
 
   return (
-    <div className="signin-page-container">
-      <div className="signin-card">
-        <h1 className="signin-title">TaskTrail</h1>
-        <h2 className="signin-subtitle">Sign In</h2>
-        <form onSubmit={handleSubmit} className="signin-form">
+    <div className="auth-page-container">
+      <div className="auth-card">
+        <h1 className="auth-title">TaskTrail</h1>
+        <h2 className="auth-subtitle">Sign In</h2>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
@@ -27,6 +48,7 @@ const SignInPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"   // ✅ helps autofill
               required
             />
           </div>
@@ -37,19 +59,20 @@ const SignInPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"   // ✅ helps autofill
               required
             />
           </div>
-          <button type="submit" className="signin-btn">
-            Sign In
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
-        <div className="contact-admin">
-          <p>Don't have an account? <Link to="#" className="contact-link">Contact Admin</Link></p>
+        <div className="auth-links">
+          <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
       </div>
     </div>
   )
 }
 
-export default SignInPage
+export default SignInPage;

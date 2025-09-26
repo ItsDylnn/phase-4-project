@@ -5,9 +5,7 @@ from flask_mail import Mail, Message
 from datetime import datetime
 from threading import Thread
 from flask_migrate import Migrate
-import os
-
-from models import Project
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
@@ -17,6 +15,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+# email setup (optional for now)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
@@ -28,18 +27,23 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
 
+# ---------------- MODELS ---------------- #
+
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     tasks = db.relationship('Task', backref='project', lazy=True)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(200), nullable=False)  # <-- added password
+    role = db.Column(db.String(20), nullable=False, default="user")
     tasks = db.relationship('Task', backref='assignee', lazy=True)
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,12 +54,16 @@ class Task(db.Model):
     assigned_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comments = db.relationship('Comment', backref='task', lazy=True)
 
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+# ---------------- EMAIL HELPERS ---------------- #
 
 def send_email_notification(user_email, task_title):
     try:
@@ -72,9 +80,67 @@ def send_email_notification(user_email, task_title):
 def send_email_async(user_email, task_title):
     Thread(target=send_email_notification, args=(user_email, task_title)).start()
 
+
+# ---------------- ROUTES ---------------- #
+
 @app.route("/")
 def home():
     return "flask runs"
+
+
+# ---- AUTH ---- #
+
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = request.get_json()
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
+
+    if not username or not email or not password:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"error": "User already exists"}), 400
+
+    hashed_pw = generate_password_hash(password)
+    new_user = User(username=username, email=email, password=hashed_pw, role="user")
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({
+        "id": new_user.id,
+        "username": new_user.username,
+        "email": new_user.email,
+        "role": new_user.role
+    }), 201
+
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"error": "Invalid email or password"}), 401
+
+    return jsonify({
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "role": user.role
+    }), 200
+
+
+# ---- PROJECTS ---- #
 
 @app.route("/projects", methods=["GET"])
 def get_projects():
@@ -91,6 +157,9 @@ def create_project():
     db.session.commit()
     return jsonify({"id": new_project.id, "name": new_project.name, "description": new_project.description}), 201
 
+
+# ---- USERS ---- #
+
 @app.route("/users", methods=["GET"])
 def get_users():
     users = User.query.all()
@@ -101,11 +170,13 @@ def create_user():
     data = request.get_json()
     if not data.get("username") or not data.get("email") or not data.get("role"):
         return jsonify({"error": "missing required user fields"}), 400
-    new_user = User(username=data.get("username"), email=data.get("email"), role=data.get("role"))
+    new_user = User(username=data.get("username"), email=data.get("email"), role=data.get("role"), password="temp")
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"id": new_user.id, "username": new_user.username, "email": new_user.email, "role": new_user.role}), 201
 
+
+# ---- TASKS ---- #
 
 @app.route("/users/<int:user_id>/tasks", methods=["GET"])
 def get_tasks_for_user(user_id):
@@ -121,7 +192,6 @@ def get_tasks_for_user(user_id):
         }
         for t in tasks
     ])
-
 
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
@@ -190,6 +260,9 @@ def add_comment(task_id):
     db.session.add(comment)
     db.session.commit()
     return jsonify({"id": comment.id, "content": comment.content, "user_id": comment.user_id, "timestamp": comment.timestamp}), 201
+
+
+# ---------------- MAIN ---------------- #
 
 if __name__ == "__main__":
     with app.app_context():
