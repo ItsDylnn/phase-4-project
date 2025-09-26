@@ -34,6 +34,89 @@ TaskTrail is a modern, full-stack project management application designed to hel
 - Prettier for code formatting
 - Git for version control
 
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm (comes with Node.js)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/phase-4-project.git
+   cd phase-4-project
+   ```
+
+2. Install dependencies for both backend and frontend:
+   ```bash
+   # Install root dependencies (including JSON Server)
+   npm install
+   
+   # Install frontend dependencies
+   cd frontend
+   npm install
+   cd ..
+   ```
+
+### Running the Application
+
+#### Option 1: Run Frontend and Backend Separately
+
+1. Start the JSON Server (backend):
+   ```bash
+   # From the project root directory
+   npm run server
+   ```
+   The server will run on http://localhost:5555
+
+2. In a new terminal, start the React development server:
+   ```bash
+   # From the project root directory
+   npm run client
+   ```
+   The frontend will be available at http://localhost:3000
+
+#### Option 2: Run Both Servers Concurrently
+
+From the project root directory, run:
+```bash
+npm run dev
+```
+
+This will start both the JSON Server and the React development server simultaneously.
+
+### Available API Endpoints
+
+The JSON Server provides the following RESTful endpoints:
+
+- `GET /tasks` - Get all tasks
+- `GET /tasks/:id` - Get a single task
+- `POST /tasks` - Create a new task
+- `PUT /tasks/:id` - Update a task
+- `PATCH /tasks/:id` - Partially update a task
+- `DELETE /tasks/:id` - Delete a task
+
+Similar endpoints are available for other resources like projects, users, etc.
+
+## 🔧 Project Structure
+
+```
+phase-4-project/
+├── frontend/               # React frontend
+│   ├── public/            # Static files
+│   ├── src/               # React source code
+│   │   ├── components/    # Reusable UI components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # API services
+│   │   └── App.js         # Main application component
+│   └── package.json       # Frontend dependencies
+├── db.json                # JSON Server database
+├── server.js              # JSON Server configuration
+└── package.json           # Root dependencies and scripts
+```
+
 ## 🛠️ Installation
 
 ### Prerequisites
