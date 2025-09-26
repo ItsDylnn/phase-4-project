@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Button, Card, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { Container, Button, Card, Row, Col } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import axios from 'axios'
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { currentUser } = useAuth();
-  const navigate = useNavigate();
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get('/api/projects', {
           headers: { Authorization: `Bearer ${currentUser.token}` }
-        });
-        setProjects(response.data);
+        })
+        setProjects(response.data)
       } catch (err) {
-        setError('Failed to load projects');
-        console.error('Error fetching projects:', err);
+        setError('Failed to load projects')
+        console.error('Error fetching projects:', err)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
     if (currentUser) {
-      fetchProjects();
+      fetchProjects()
     }
-  }, [currentUser]);
+  }, [currentUser])
 
-  if (loading) return <div>Loading projects...</div>;
-  if (error) return <div className="alert alert-danger">{error}</div>;
+  if (loading) return <div>Loading projects...</div>
+  if (error) return <div className="alert alert-danger">{error}</div>
 
   return (
     <Container className="mt-4">
@@ -75,7 +75,7 @@ const ProjectsPage = () => {
         )}
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default ProjectsPage;
+export default ProjectsPage

@@ -11,7 +11,7 @@ import SignUpPage from './pages/SignUpPage'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import './styles/App.css'
 
-// Protected Route Component
+
 const ProtectedRoute = ({ children }) => {
   const { currentUser } = useAuth()
   
@@ -30,7 +30,6 @@ const ProtectedRoute = ({ children }) => {
 }
 
 function AppContent() {
-  // ✅ Put tasks into state so setTasks works
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -103,6 +102,8 @@ function AppContent() {
       progress: 20
     }
   ]
+
+  const { currentUser } = useAuth();
 
   return (
     <div className="App">

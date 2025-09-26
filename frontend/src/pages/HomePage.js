@@ -1,49 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import axios from 'axios'
 
 const HomePage = () => {
-  const { currentUser } = useAuth();
-  const navigate = useNavigate();
-  const [recentProjects, setRecentProjects] = useState([]);
-  const [recentTasks, setRecentTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
+  const [recentProjects, setRecentProjects] = useState([])
+  const [recentTasks, setRecentTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        setLoading(true);
+        setLoading(true)
         
         // Fetch recent projects
         const projectsRes = await axios.get('/api/projects?limit=3', {
           headers: { Authorization: `Bearer ${currentUser.token}` }
-        });
+        })
         
         // Fetch recent tasks
         const tasksRes = await axios.get('/api/tasks?limit=5', {
           headers: { Authorization: `Bearer ${currentUser.token}` }
-        });
+        })
         
-        setRecentProjects(projectsRes.data);
-        setRecentTasks(tasksRes.data);
+        setRecentProjects(projectsRes.data)
+        setRecentTasks(tasksRes.data)
       } catch (err) {
-        setError('Failed to load dashboard data');
-        console.error('Error fetching dashboard data:', err);
+        setError('Failed to load dashboard data')
+        console.error('Error fetching dashboard data:', err)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
     if (currentUser) {
-      fetchDashboardData();
+      fetchDashboardData()
     }
-  }, [currentUser]);
+  }, [currentUser])
 
-  if (loading) return <div>Loading dashboard...</div>;
-  if (error) return <div className="alert alert-danger">{error}</div>;
+  if (loading) return <div>Loading dashboard...</div>
+  if (error) return <div className="alert alert-danger">{error}</div>
 
   return (
     <Container className="mt-4">
@@ -178,23 +178,23 @@ const HomePage = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
 // Helper function to determine badge color based on task status
 const getStatusBadgeColor = (status) => {
   switch (status?.toLowerCase()) {
     case 'completed':
-      return 'success';
+      return 'success'
     case 'in progress':
-      return 'primary';
+      return 'primary'
     case 'pending':
-      return 'warning';
+      return 'warning'
     case 'blocked':
-      return 'danger';
+      return 'danger'
     default:
-      return 'secondary';
+      return 'secondary'
   }
-};
+}
 
-export default HomePage;
+export default HomePage

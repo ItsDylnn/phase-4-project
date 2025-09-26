@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
-import '../styles/Auth.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
+import '../styles/Auth.css'
 
 const SignInPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     
     try {
-      setError('');
-      setLoading(true);
+      setError('')
+      setLoading(true)
       
-      const result = await login(email, password);
+      const result = await login(email, password)
       
       if (result.success) {
-        navigate('/dashboard');
+        navigate('/dashboard')
       } else {
-        setError('Failed to sign in. Please check your credentials.');
+        setError('Failed to sign in. Please check your credentials.')
       }
     } catch (err) {
-      setError('Failed to sign in. Please try again.');
+      setError('Failed to sign in. Please try again.')
     }
     
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   return (
     <div className="auth-page-container">
@@ -70,7 +70,7 @@ const SignInPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignInPage;
+export default SignInPage
