@@ -1,8 +1,8 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Design homepagrvgv3rergve layout",
+      "id": 1,
+      "title": "Design home page layout",
       "description": "Create wireframes and mockups for new homepage design",
       "status": "In Progress",
       "due_date": "2023-11-15",
@@ -10,7 +10,7 @@
       "assignee_id": 1
     },
     {
-      "id": "2",
+      "id": 2,
       "title": "Implement user authentication",
       "description": "Set up login and registration system with JWT tokens",
       "status": "Not Started",

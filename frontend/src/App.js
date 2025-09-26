@@ -11,7 +11,6 @@ import SignUpPage from './pages/SignUpPage'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import './styles/App.css'
 
-
 const ProtectedRoute = ({ children }) => {
   const { currentUser } = useAuth()
   
@@ -103,17 +102,15 @@ function AppContent() {
     }
   ]
 
-  const { currentUser } = useAuth();
-
   return (
     <div className="App">
       <Routes>
+        {/* Public routes */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route
-          path="/"
-          element={<Navigate to="/signin" replace />}
-        />
+        <Route path="/" element={<Navigate to="/signin" replace />} />
+
+        {/* Protected routes */}
         <Route
           path="/dashboard"
           element={
@@ -165,15 +162,15 @@ function AppContent() {
           }
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={
             <ProtectedRoute>
-              <Profile 
-                users={mockUsers}
-              />
+              <Profile users={mockUsers} />
             </ProtectedRoute>
           }
         />
+
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/signin" replace />} />
       </Routes>
     </div>

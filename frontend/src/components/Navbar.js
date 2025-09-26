@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
-  const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
-      await logout();
-      navigate('/login');
+      await logout()
+      navigate('/login')
     } catch (error) {
-      console.error('Failed to log out', error);
+      console.error('Failed to log out', error)
     }
-  };
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
