@@ -15,7 +15,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# email setup (optional for now)
+
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
@@ -27,7 +27,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
 
-# ---------------- MODELS ---------------- #
+
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,7 +40,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)  # <-- added password
+    password = db.Column(db.String(200), nullable=False) 
     role = db.Column(db.String(20), nullable=False, default="user")
     tasks = db.relationship('Task', backref='assignee', lazy=True)
 
@@ -63,7 +63,7 @@ class Comment(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-# ---------------- EMAIL HELPERS ---------------- #
+
 
 def send_email_notification(user_email, task_title):
     try:
@@ -81,14 +81,13 @@ def send_email_async(user_email, task_title):
     Thread(target=send_email_notification, args=(user_email, task_title)).start()
 
 
-# ---------------- ROUTES ---------------- #
+
 
 @app.route("/")
 def home():
     return "flask runs"
 
 
-# ---- AUTH ---- #
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -140,7 +139,6 @@ def login():
     }), 200
 
 
-# ---- PROJECTS ---- #
 
 @app.route("/projects", methods=["GET"])
 def get_projects():
@@ -158,7 +156,7 @@ def create_project():
     return jsonify({"id": new_project.id, "name": new_project.name, "description": new_project.description}), 201
 
 
-# ---- USERS ---- #
+
 
 @app.route("/users", methods=["GET"])
 def get_users():
@@ -176,7 +174,6 @@ def create_user():
     return jsonify({"id": new_user.id, "username": new_user.username, "email": new_user.email, "role": new_user.role}), 201
 
 
-# ---- TASKS ---- #
 
 @app.route("/users/<int:user_id>/tasks", methods=["GET"])
 def get_tasks_for_user(user_id):
@@ -262,7 +259,6 @@ def add_comment(task_id):
     return jsonify({"id": comment.id, "content": comment.content, "user_id": comment.user_id, "timestamp": comment.timestamp}), 201
 
 
-# ---------------- MAIN ---------------- #
 
 if __name__ == "__main__":
     with app.app_context():
