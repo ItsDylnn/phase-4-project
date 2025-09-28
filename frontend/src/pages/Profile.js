@@ -6,7 +6,7 @@ import '../styles/Profile.css'
 const Profile = ({ users }) => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { currentUser } = useAuth()
+  const { currentUser, updateUser } = useAuth()
 
   // If an :id is in the URL, show that user. Otherwise, fallback to currentUser
   const viewedUser = id
@@ -44,6 +44,29 @@ const Profile = ({ users }) => {
 
     try {
       setIsLoading(true)
+      
+      // Update user data
+      const updatedUser = {
+        ...currentUser,
+        name: formData.name,
+        email: formData.email
+      }
+      
+      // Update in localStorage
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser))
+      
+      // Update registered users list
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
+      const updatedUsers = registeredUsers.map(user => 
+        user.id === currentUser.id ? updatedUser : user
+      )
+      localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers))
+      
+      // Update context if updateUser function exists
+      if (updateUser) {
+        updateUser(updatedUser)
+      }
+      
       setSuccess('Profile updated successfully!')
       setFormData(prev => ({
         ...prev,
