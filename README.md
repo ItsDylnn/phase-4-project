@@ -1,34 +1,32 @@
-# TaskTrail - Project Management Application
+# 🚀 TaskTrail - Project Management Application
 
-TaskTrail is a modern, full-stack project management application designed to help teams collaborate, track tasks, and manage projects efficiently. With an intuitive interface and powerful features, TaskTrail streamlines project workflows and enhances team productivity.
+TaskTrail is a modern, full-stack project management application designed to help teams collaborate, track tasks, and manage projects efficiently. Built with React and Flask, it provides an intuitive interface for seamless project management.
 
-![TaskTrail Screenshot](https://via.placeholder.com/800x400?text=TaskTrail+Screenshot)
+![TaskTrail](https://img.shields.io/badge/Status-Active-brightgreen) ![React](https://img.shields.io/badge/React-18.2.0-blue) ![Flask](https://img.shields.io/badge/Flask-3.1.2-green) ![Python](https://img.shields.io/badge/Python-3.8+-yellow)
 
 ## ✨ Features
 
-- **Project Management**: Create, view, update, and delete projects
-- **Task Tracking**: Manage tasks with different statuses and priorities
-- **Team Collaboration**: Add team members and assign tasks
-- **User Authentication**: Secure login and registration system
-- **Real-time Updates**: Stay in sync with your team's progress
-- **Responsive Design**: Works on desktop and mobile devices
+- 📋 **Project Management**: Create, view, update, and delete projects
+- ✅ **Task Creation & Tracking**: Add new tasks with status management
+- 👥 **Team Collaboration**: Assign tasks to team members
+- 🔐 **User Authentication**: Secure login and registration
+- 📱 **Responsive Design**: Works on desktop and mobile devices
+- 🎨 **Modern UI**: Clean and intuitive interface
 
 ## 🚀 Tech Stack
 
 ### Frontend
-- React.js
-- React Router for navigation
-- Context API for state management
-- Formik & Yup for form handling and validation
-- Axios for API requests
-- Tailwind CSS for styling
+- **React.js** - Component-based UI framework
+- **React Router** - Client-side routing
+- **Context API** - State management
+- **Custom CSS** - Responsive styling
 
 ### Backend
-- Python Flask
-- SQLAlchemy ORM
-- Flask-Migrate for database migrations
-- SQLite (Development) / PostgreSQL (Production)
-- JWT for authentication
+- **Python Flask** - Web framework
+- **SQLAlchemy ORM** - Database management
+- **Flask-Migrate** - Database migrations
+- **SQLite** - Development database
+- **Flask-JWT-Extended** - Authentication
 
 ## �️ Installation
 
@@ -47,12 +45,14 @@ TaskTrail is a modern, full-stack project management application designed to hel
 
 2. **Set up the backend**
    ```bash
-   # Create and activate a virtual environment
+   cd backend
+   
+   # Create and activate virtual environment
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-   # Install Python dependencies
-   pip install -r backend/requirements.txt
+   # Install dependencies
+   pip install -r requirements.txt
    ```
 
 3. **Set up the frontend**
@@ -62,93 +62,89 @@ TaskTrail is a modern, full-stack project management application designed to hel
    cd ..
    ```
 
-4. **Configure environment variables**
-   Create a `.env` file in the root directory:
-   ```
-   FLASK_APP=backend/app.py
-   FLASK_ENV=development
-   SECRET_KEY=your-secret-key-here
-   DATABASE_URL=sqlite:///app.db
+4. **Environment setup (optional)**
+   ```bash
+   # Set debug mode (optional)
+   export FLASK_DEBUG=true
    ```
 
 ## 🚀 Running the Application
 
 1. **Start the backend server**
    ```bash
-   # From the project root directory
-   flask run
+   cd backend
+   python app.py
    ```
-   The backend will be available at http://localhost:5000
+   Backend runs on: http://localhost:5555
 
-2. **Start the frontend development server**
+2. **Start the frontend (new terminal)**
    ```bash
-   # From the frontend directory
    cd frontend
    npm start
    ```
-   The frontend will be available at http://localhost:3000
+   Frontend runs on: http://localhost:3000
 
-## 📚 API Endpoints
+3. **Access the application**
+   - Open http://localhost:3000 in your browser
+   - Use any email/password to sign in (demo mode)
 
-### Authentication
-- `POST /api/signup` - Register a new user
-- `POST /api/login` - Login user and get JWT token
+## 🎯 Usage
 
-### Projects
-- `GET /api/projects` - Get all projects
-- `POST /api/projects` - Create a new project
-- `GET /api/projects/<id>` - Get a specific project
-- `PATCH /api/projects/<id>` - Update a project
-- `DELETE /api/projects/<id>` - Delete a project
-
-### Tasks
-- `GET /api/tasks` - Get all tasks
-- `POST /api/tasks` - Create a new task
-- `GET /api/tasks/<id>` - Get a specific task
-- `PATCH /api/tasks/<id>` - Update a task
-- `DELETE /api/tasks/<id>` - Delete a task
+1. **Sign In**: Use any email and password (demo authentication)
+2. **Dashboard**: View project overview and task statistics
+3. **Add Tasks**: Click "+ Add Task" button to create new tasks
+4. **Manage Tasks**: Update task status and details
+5. **Team View**: See all team members and their assignments
+6. **Profile**: View and manage your profile information
 
 ## 🏗️ Project Structure
 
 ```
 phase-4-project/
-├── backend/                  # Flask backend
-│   ├── migrations/          # Database migrations
-│   ├── routes/              # API routes
-│   ├── models.py            # Database models
-│   ├── app.py               # Flask application
-│   └── requirements.txt     # Python dependencies
-├── frontend/                # React frontend
-│   ├── public/              # Static files
+├── backend/                 # Flask API server
+│   ├── routes/             # API route handlers
+│   ├── utils/              # Utility functions
+│   ├── app.py              # Main Flask application
+│   ├── models.py           # Database models
+│   └── requirements.txt    # Python dependencies
+├── frontend/               # React application
 │   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── context/         # React context providers
-│   │   ├── pages/           # Page components
-│   │   ├── services/        # API services
-│   │   ├── App.js           # Main application component
-│   │   └── index.js         # Application entry point
-│   └── package.json         # Frontend dependencies
-├── .gitignore              # Git ignore file
-├── README.md               # Project documentation
-└── requirements.txt        # Backend dependencies
+│   │   ├── components/     # Reusable components
+│   │   │   └── Tasks/      # Task-related components
+│   │   ├── context/        # React context (auth)
+│   │   ├── pages/          # Page components
+│   │   ├── styles/         # CSS stylesheets
+│   │   └── App.js          # Main app component
+│   └── package.json        # Node dependencies
+└── README.md               # This file
 ```
+
+## 🔧 Recent Updates
+
+- ✅ Fixed authentication routing issues
+- ✅ Added task creation functionality with modal form
+- ✅ Improved error handling and validation
+- ✅ Enhanced UI with responsive design
+- ✅ Resolved performance issues with database queries
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create feature branch (`git checkout -b feature/NewFeature`)
+3. Commit changes (`git commit -m 'Add NewFeature'`)
+4. Push to branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🙏 Built With
 
-- [Create React App](https://create-react-app.dev/)
-- [Flask](https://flask.palletsprojects.com/)
-- [SQLAlchemy](https://www.sqlalchemy.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Icons](https://react-icons.github.io/react-icons/)
+- [React](https://reactjs.org/) - Frontend framework
+- [Flask](https://flask.palletsprojects.com/) - Backend framework
+- [SQLAlchemy](https://www.sqlalchemy.org/) - Database ORM
+
+---
+
+**TaskTrail** - Making project management simple and efficient! 🎯
