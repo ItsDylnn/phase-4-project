@@ -25,23 +25,44 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (email, password) => {
-    // In a real app, you would make an API call to your backend
-    // For demo purposes, we'll use mock data
-    const mockUser = {
-      id: 1,
-      name: 'Demo User',
-      email: email,
-      role: 'user'
-    };
+    // Check if user exists in localStorage from previous signup
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const user = existingUsers.find(u => u.email === email);
     
-    setCurrentUser(mockUser);
-    localStorage.setItem('currentUser', JSON.stringify(mockUser));
-    return { success: true };
+    if (user) {
+      // Use existing user data
+      setCurrentUser(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      return { success: true };
+    } else {
+      // Create new user for demo purposes
+      const newUser = {
+        id: Date.now(),
+        name: email.split('@')[0], // Use email prefix as name
+        email: email,
+        role: 'user'
+      };
+      
+      setCurrentUser(newUser);
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      
+      // Also add to registered users
+      const updatedUsers = [...existingUsers, newUser];
+      localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
+      
+      return { success: true };
+    }
   };
 
   const signup = async (name, email, password) => {
-    // In a real app, you would make an API call to your backend
-    // For demo purposes, we'll just create a user object
+    // Check if user already exists
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const userExists = existingUsers.find(u => u.email === email);
+    
+    if (userExists) {
+      return { success: false, message: 'User already exists' };
+    }
+    
     const newUser = {
       id: Date.now(),
       name,
@@ -49,6 +70,11 @@ export const AuthProvider = ({ children }) => {
       role: 'user'
     };
     
+    // Add to registered users
+    const updatedUsers = [...existingUsers, newUser];
+    localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
+    
+    // Set as current user
     setCurrentUser(newUser);
     localStorage.setItem('currentUser', JSON.stringify(newUser));
     return { success: true };

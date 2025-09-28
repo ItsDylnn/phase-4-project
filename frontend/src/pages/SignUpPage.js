@@ -29,7 +29,7 @@ const SignUpPage = () => {
       const result = await signup(name, email, password);
       
       if (result.success) {
-        navigate('/');
+        navigate('/dashboard');
       } else {
         setError(result.message || 'Failed to create an account');
       }
