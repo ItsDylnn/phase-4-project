@@ -38,7 +38,15 @@ const TeamMember = ({ user, projects }) => {
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     if (message.trim()) {
-      alert(`Message sent to ${user.name}: "${message}"`);
+      // Create mailto link to send real email
+      const subject = encodeURIComponent(`Message from TaskTrail`);
+      const body = encodeURIComponent(`Hi ${user.name},\n\n${message}\n\nBest regards,\nTaskTrail Team`);
+      const mailtoLink = `mailto:${user.email}?subject=${subject}&body=${body}`;
+      
+      // Open email client
+      window.open(mailtoLink, '_blank');
+      
+      alert(`Email client opened to send message to ${user.name}`);
       setMessage('');
       setShowMessageModal(false);
     }

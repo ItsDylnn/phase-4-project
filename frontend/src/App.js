@@ -70,9 +70,9 @@ function AppContent() {
   ])
 
   const mockUsers = [
-    { id: 1, name: 'Wayne Travis', email: 'wayne@example.com', role: 'project_manager' },
-    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', role: 'team_lead' },
-    { id: 3, name: 'Mike Chen', email: 'mike@example.com', role: 'developer' },
+    { id: 1, name: 'Travis Jibril', email: 'travisjibril25@gmail.com', role: 'project_manager' },
+    { id: 2, name: 'Otieno Ida', email: 'otienoida828@gmail.com', role: 'team_lead' },
+    { id: 3, name: 'Apollo Timothy', email: 'apollotimothy13@gmail.com', role: 'developer' },
     { id: 4, name: 'Emily Rodriguez', email: 'emily@example.com', role: 'designer' }
   ]
 

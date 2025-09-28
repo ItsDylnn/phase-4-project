@@ -35,22 +35,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('currentUser', JSON.stringify(user));
       return { success: true };
     } else {
-      // Create new user for demo purposes
-      const newUser = {
-        id: Date.now(),
-        name: email.split('@')[0], // Use email prefix as name
-        email: email,
-        role: 'user'
-      };
-      
-      setCurrentUser(newUser);
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
-      
-      // Also add to registered users
-      const updatedUsers = [...existingUsers, newUser];
-      localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
-      
-      return { success: true };
+      // User must sign up first
+      return { success: false, message: 'No account found. Please sign up first.' };
     }
   };
 
