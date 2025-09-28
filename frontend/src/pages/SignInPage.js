@@ -66,6 +66,7 @@ const SignInPage = () => {
           </button>
         </form>
         <div className="auth-links">
+          <p><Link to="/forgot-password">Forgot your password?</Link></p>
           <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
       </div>

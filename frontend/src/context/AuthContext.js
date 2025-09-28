@@ -30,10 +30,16 @@ export const AuthProvider = ({ children }) => {
     const user = existingUsers.find(u => u.email === email);
     
     if (user) {
-      // Use existing user data
-      setCurrentUser(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return { success: true };
+      // Check password
+      if (user.password === password) {
+        // Remove password from user object before setting current user
+        const { password: _, ...userWithoutPassword } = user;
+        setCurrentUser(userWithoutPassword);
+        localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+        return { success: true };
+      } else {
+        return { success: false, message: 'Invalid password.' };
+      }
     } else {
       // User must sign up first
       return { success: false, message: 'No account found. Please sign up first.' };
@@ -53,16 +59,18 @@ export const AuthProvider = ({ children }) => {
       id: Date.now(),
       name,
       email,
+      password, // Store password for login validation
       role: 'user'
     };
     
-    // Add to registered users
+    // Add to registered users (with password)
     const updatedUsers = [...existingUsers, newUser];
     localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
     
-    // Set as current user
-    setCurrentUser(newUser);
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    // Set as current user (without password)
+    const { password: _, ...userWithoutPassword } = newUser;
+    setCurrentUser(userWithoutPassword);
+    localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
     return { success: true };
   };
 
@@ -76,12 +84,26 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
   };
 
+  const resetPassword = (email, newPassword) => {
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const userIndex = existingUsers.findIndex(u => u.email === email);
+    
+    if (userIndex !== -1) {
+      existingUsers[userIndex].password = newPassword;
+      localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
+      return { success: true, message: 'Password reset successfully!' };
+    } else {
+      return { success: false, message: 'Email not found.' };
+    }
+  };
+
   const value = {
     currentUser,
     login,
     signup,
     logout,
     updateUser,
+    resetPassword,
     isAuthenticated: !!currentUser
   };
 

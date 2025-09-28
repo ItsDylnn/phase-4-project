@@ -8,6 +8,7 @@ import Team from './pages/Team'
 import Profile from './pages/Profile'
 import SignInPage from './pages/SignInPage'
 import SignUpPage from './pages/SignUpPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import './styles/App.css'
 
@@ -110,6 +111,7 @@ function AppContent() {
       <Routes>
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/"
           element={currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/signin" replace />}
