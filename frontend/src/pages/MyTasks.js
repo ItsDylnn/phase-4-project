@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import TaskList from '../components/Tasks/TaskList'
+import AddTask from '../components/Tasks/AddTask'
 import { useAuth } from '../context/AuthContext'
 
 const MyTasks = ({ tasks, setTasks, users, projects }) => {
   const { currentUser } = useAuth()
   const [filter, setFilter] = useState('all')
+  const [showAddTask, setShowAddTask] = useState(false)
   
   const myTasks = tasks.filter(task => task.assignee_id === currentUser.id)
   
@@ -23,8 +25,16 @@ const MyTasks = ({ tasks, setTasks, users, projects }) => {
   return (
     <div className="my-tasks-page">
       <div className="page-header">
-        <h1>My Tasks</h1>
-        <p>Manage your assigned tasks and track your progress</p>
+        <div className="page-title">
+          <h1>My Tasks</h1>
+          <p>Manage your assigned tasks and track your progress</p>
+        </div>
+        <button 
+          className="btn-primary add-task-btn" 
+          onClick={() => setShowAddTask(true)}
+        >
+          + Add Task
+        </button>
       </div>
 
       {/* Task Statistics */}
@@ -81,6 +91,17 @@ const MyTasks = ({ tasks, setTasks, users, projects }) => {
             }
           </p>
         </div>
+      )}
+      
+      {showAddTask && (
+        <AddTask
+          projects={projects}
+          users={users}
+          onTaskAdded={(newTask) => {
+            setTasks(prev => [...prev, newTask])
+          }}
+          onClose={() => setShowAddTask(false)}
+        />
       )}
     </div>
   )

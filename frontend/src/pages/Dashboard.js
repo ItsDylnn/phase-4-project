@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProjectList from '../components/Projects/ProjectList'
 import TaskList from '../components/Tasks/TaskList'
+import AddTask from '../components/Tasks/AddTask'
 import { useAuth } from '../context/AuthContext'
 
 const Dashboard = ({ projects, tasks, setTasks, users }) => {
   const { currentUser } = useAuth()
+  const [showAddTask, setShowAddTask] = useState(false)
   
   const stats = {
     totalProjects: projects.length,
@@ -63,7 +65,15 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
         <section className="dashboard-section">
           <div className="section-header">
             <h2>My Recent Tasks</h2>
-            <a href="/my-tasks" className="view-all">View All</a>
+            <div className="section-actions">
+              <button 
+                className="btn-primary add-task-btn" 
+                onClick={() => setShowAddTask(true)}
+              >
+                + Add Task
+              </button>
+              <a href="/my-tasks" className="view-all">View All</a>
+            </div>
           </div>
           <TaskList 
             tasks={myRecentTasks} 
@@ -105,6 +115,17 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
           </div>
         </section>
       </div>
+      
+      {showAddTask && (
+        <AddTask
+          projects={projects}
+          users={users}
+          onTaskAdded={(newTask) => {
+            setTasks(prev => [...prev, newTask])
+          }}
+          onClose={() => setShowAddTask(false)}
+        />
+      )}
     </div>
   )
 }
