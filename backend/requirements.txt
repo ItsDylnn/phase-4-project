@@ -6,7 +6,7 @@ flask-cors==6.0.1
 Flask-SQLAlchemy==3.1.1
 Flask-Marshmallow==0.15.0
 marshmallow-sqlalchemy==1.1.0
-marshmallow==3.22.1
+marshmallow==3.21.3
 greenlet==3.2.4
 itsdangerous==2.2.0
 Jinja2==3.1.6
@@ -18,3 +18,8 @@ Flask-Mail==0.9.1
 python-dotenv==1.0.1
 Flask-JWT-Extended==4.6.0
 PyJWT==2.8.0
+flask
+flask_sqlalchemy
+flask_migrate
+sqlalchemy
+sqlalchemy_serializer
