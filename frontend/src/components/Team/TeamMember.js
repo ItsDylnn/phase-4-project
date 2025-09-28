@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TeamMember = ({ user, projects }) => {
+  const navigate = useNavigate();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
+  
   // Count how many projects this user manages
   const managedProjects = projects.filter(project => project.manager_id === user.id);
   
@@ -20,6 +25,23 @@ const TeamMember = ({ user, projects }) => {
     return role.split('_').map(word => 
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');
+  };
+
+  const handleViewProfile = () => {
+    navigate(`/profile/${user.id}`);
+  };
+
+  const handleSendMessage = () => {
+    setShowMessageModal(true);
+  };
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    if (message.trim()) {
+      alert(`Message sent to ${user.name}: "${message}"`);
+      setMessage('');
+      setShowMessageModal(false);
+    }
   };
 
   return (
@@ -67,9 +89,41 @@ const TeamMember = ({ user, projects }) => {
       )}
       
       <div className="member-actions">
-        <button className="btn-view">View Profile</button>
-        <button className="btn-message">Send Message</button>
+        <button className="btn-view" onClick={handleViewProfile}>View Profile</button>
+        <button className="btn-message" onClick={handleSendMessage}>Send Message</button>
       </div>
+      
+      {showMessageModal && (
+        <div className="modal-overlay" onClick={() => setShowMessageModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Send Message to {user.name}</h3>
+              <button className="close-btn" onClick={() => setShowMessageModal(false)}>×</button>
+            </div>
+            <form onSubmit={handleMessageSubmit} className="message-form">
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder={`Write your message to ${user.name}...`}
+                  rows="4"
+                  required
+                />
+              </div>
+              <div className="form-actions">
+                <button type="button" onClick={() => setShowMessageModal(false)} className="btn-secondary">
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary">
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

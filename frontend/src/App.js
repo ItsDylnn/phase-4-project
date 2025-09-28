@@ -174,6 +174,16 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/profile/:id"
+          element={
+            <ProtectedRoute>
+              <Profile 
+                users={mockUsers}
+              />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/signin" replace />} />
       </Routes>
     </div>
