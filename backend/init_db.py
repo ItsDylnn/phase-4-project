@@ -1,4 +1,4 @@
-from app import create_app
+from backend.routes import create_app
 from extensions import db
 
 def init_db():

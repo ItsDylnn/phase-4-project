@@ -1,45 +1,69 @@
-import React, { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import React, { useState } from "react";
 
 const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
-  const { currentUser } = useAuth()
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    status: 'Not Started',
-    project_id: '',
-    assignee_id: currentUser?.id || '',
-    due_date: ''
-  })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    
-    if (!formData.title.trim() || !formData.project_id || !formData.assignee_id) {
-      alert('Please fill in all required fields')
-      return
-    }
-    
-    const newTask = {
-      id: Date.now(),
-      title: formData.title.trim(),
-      description: formData.description.trim(),
-      status: formData.status,
-      project_id: parseInt(formData.project_id),
-      assignee_id: parseInt(formData.assignee_id),
-      due_date: formData.due_date
-    }
-
-    onTaskAdded(newTask)
-    onClose()
-  }
+    title: "",
+    description: "",
+    status: "Not Started",
+    project_id: "",
+    assignee_id: "",
+    due_date: "",
+  });
 
   const handleChange = (e) => {
-    setFormData({
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.title.trim() || !formData.project_id) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    const payload = {
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      project_id: Number(formData.project_id),
+      assignee_id: formData.assignee_id ? Number(formData.assignee_id) : null,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to add task");
+      }
+
+      // ✅ Update parent state instantly with the new task
+      onTaskAdded(data.task);
+
+      // ✅ Close modal
+      onClose();
+
+      // ✅ Reset form
+      setFormData({
+        title: "",
+        description: "",
+        status: "Not Started",
+        project_id: "",
+        assignee_id: "",
+        due_date: "",
+      });
+    } catch (err) {
+      console.error("Error adding task:", err);
+      alert("Error adding task");
+    }
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -48,7 +72,7 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
           <h2>Add New Task</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="add-task-form">
           <div className="form-group">
             <label htmlFor="title">Task Title *</label>
@@ -59,7 +83,6 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
               value={formData.title}
               onChange={handleChange}
               required
-              placeholder="Enter task title"
             />
           </div>
 
@@ -70,7 +93,6 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Enter task description"
               rows="3"
             />
           </div>
@@ -86,7 +108,7 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
                 required
               >
                 <option value="">Select a project</option>
-                {projects.map(project => (
+                {projects.map((project) => (
                   <option key={project.id} value={project.id}>
                     {project.name}
                   </option>
@@ -102,7 +124,8 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
                 value={formData.assignee_id}
                 onChange={handleChange}
               >
-                {users.map(user => (
+                <option value="">Select user</option>
+                {users.map((user) => (
                   <option key={user.id} value={user.id}>
                     {user.name}
                   </option>
@@ -149,7 +172,7 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddTask
+export default AddTask;

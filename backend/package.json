@@ -1,0 +1,19 @@
+{
+  "name": "tasktrail",
+  "version": "1.0.0",
+  "description": "TaskTrail - Project Management Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "json-server --watch db.json --port 5555",
+    "client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd frontend && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1",
+    "json-server": "^0.17.3"
+  },
+  "author": "",
+  "license": "MIT"
+}
