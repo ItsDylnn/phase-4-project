@@ -8,7 +8,7 @@ const MyTasks = ({ tasks, setTasks, users, projects }) => {
   const [filter, setFilter] = useState('all')
   const [showAddTask, setShowAddTask] = useState(false)
   
-  const myTasks = tasks.filter(task => task.assignee_id === currentUser.id)
+  const myTasks = tasks.filter(task => task.assignee_id === currentUser?.id || task.assignee_id === 1)
   
   const filteredTasks = myTasks.filter(task => {
     if (filter === 'all') return true

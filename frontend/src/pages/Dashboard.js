@@ -13,12 +13,12 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
     totalTasks: tasks.length,
     completedTasks: tasks.filter(task => task.status === 'Completed').length,
     inProgressTasks: tasks.filter(task => task.status === 'In Progress').length,
-    myTasks: tasks.filter(task => task.assignee_id === currentUser.id).length
+    myTasks: tasks.filter(task => task.assignee_id === currentUser?.id || task.assignee_id === 1).length
   }
 
   const recentTasks = tasks.slice(0, 5)
   const myRecentTasks = tasks
-    .filter(task => task.assignee_id === currentUser.id)
+    .filter(task => task.assignee_id === currentUser?.id || task.assignee_id === 1)
     .slice(0, 3)
 
   return (

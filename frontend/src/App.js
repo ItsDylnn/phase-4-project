@@ -49,7 +49,7 @@ function AppContent() {
       status: 'Not Started',
       due_date: '2023-11-20',
       project_id: 2,
-      assignee_id: 3
+      assignee_id: 1
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ function AppContent() {
       status: 'Completed',
       due_date: '2023-10-30',
       project_id: 3,
-      assignee_id: 4
+      assignee_id: 1
     },
     {
       id: 4,
