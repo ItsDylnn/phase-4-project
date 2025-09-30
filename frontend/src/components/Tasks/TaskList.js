@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
 
-const TaskList = ({ users, projects }) => {
-  const [tasks, setTasks] = useState([]);
+const TaskList = ({ tasks, setTasks, users, projects }) => {
   const [showModal, setShowModal] = useState(false);
 
-  // ✅ Fetch tasks once when component mounts
-  useEffect(() => {
-    fetch("http://localhost:5000/api/tasks")
-      .then((res) => res.json())
-      .then((data) => {
-        // your backend returns { tasks: [...] }
-        setTasks(data.tasks || []);
-      })
-      .catch((err) => console.error("Error fetching tasks:", err));
-  }, []);
-
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/tasks/${id}`, { method: "DELETE" })
-      .then((res) => {
-        if (!res.ok) throw new Error("Delete failed");
-        return res.json().catch(() => ({}));
-      })
-      .then(() => {
-        setTasks((prev) => prev.filter((task) => task.id !== id));
-      })
-      .catch((err) => {
-        console.error("Error deleting task:", err);
-        setTasks((prev) => prev.filter((task) => task.id !== id)); // fallback
-      });
+    setTasks(prev => prev.filter(task => task.id !== id));
   };
 
   const handleUpdate = (updatedTask) => {
@@ -38,13 +15,8 @@ const TaskList = ({ users, projects }) => {
     );
   };
 
-  // ✅ Add new task instantly without refresh
   const handleTaskAdded = (newTask) => {
-    if (!newTask || !newTask.id) {
-      console.error("Invalid task returned:", newTask);
-      return;
-    }
-    setTasks((prev) => [...prev, newTask]); // append task immediately
+    setTasks(prev => [...prev, newTask]);
   };
 
   return (

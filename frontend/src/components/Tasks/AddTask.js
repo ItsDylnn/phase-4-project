@@ -17,7 +17,7 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.title.trim() || !formData.project_id) {
@@ -25,44 +25,18 @@ const AddTask = ({ projects, users, onTaskAdded, onClose }) => {
       return;
     }
 
-    const payload = {
-      ...formData,
-      project_id: Number(formData.project_id),
-      assignee_id: formData.assignee_id ? Number(formData.assignee_id) : null,
+    const newTask = {
+      id: Date.now(),
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      status: formData.status,
+      project_id: parseInt(formData.project_id),
+      assignee_id: formData.assignee_id ? parseInt(formData.assignee_id) : null,
+      due_date: formData.due_date
     };
 
-    try {
-      const response = await fetch("http://localhost:5000/api/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to add task");
-      }
-
-      // ✅ Update parent state instantly with the new task
-      onTaskAdded(data.task);
-
-      // ✅ Close modal
-      onClose();
-
-      // ✅ Reset form
-      setFormData({
-        title: "",
-        description: "",
-        status: "Not Started",
-        project_id: "",
-        assignee_id: "",
-        due_date: "",
-      });
-    } catch (err) {
-      console.error("Error adding task:", err);
-      alert("Error adding task");
-    }
+    onTaskAdded(newTask);
+    onClose();
   };
 
   return (

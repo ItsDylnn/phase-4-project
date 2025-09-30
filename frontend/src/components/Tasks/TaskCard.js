@@ -28,37 +28,17 @@ const TaskCard = ({ task, users, projects, onDelete, onUpdate }) => {
     return "#2ecc71"                     // On track
   }
 
-  const handleStatusChange = async (newStatus) => {
+  const handleStatusChange = (newStatus) => {
     const updated = { ...currentTask, status: newStatus }
-
-    const res = await fetch(`http://localhost:5000/tasks/${currentTask.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updated),
-    })
-
-    if (res.ok) {
-      const saved = await res.json()
-      setCurrentTask(saved)
-      onUpdate(saved)   // update parent state
-    }
+    setCurrentTask(updated)
+    onUpdate(updated)
   }
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = () => {
     const updated = { ...currentTask, title: editTitle, description: editDescription }
-
-    const res = await fetch(`http://localhost:5000/tasks/${currentTask.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updated),
-    })
-
-    if (res.ok) {
-      const saved = await res.json()
-      setCurrentTask(saved)
-      onUpdate(saved)
-      setIsEditing(false)
-    }
+    setCurrentTask(updated)
+    onUpdate(updated)
+    setIsEditing(false)
   }
 
   return (
