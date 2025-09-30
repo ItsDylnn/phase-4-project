@@ -20,14 +20,7 @@ const TaskList = ({ tasks, setTasks, users, projects }) => {
   };
 
   return (
-    <div className="task-list-page">
-      <div className="task-list-header">
-        <h2>Tasks</h2>
-        <button onClick={() => setShowModal(true)} className="btn-primary">
-          + Add Task
-        </button>
-      </div>
-
+    <>
       {tasks.length === 0 ? (
         <div className="empty-state">
           <p>No tasks found. Create your first task to get started!</p>
@@ -55,7 +48,7 @@ const TaskList = ({ tasks, setTasks, users, projects }) => {
           onClose={() => setShowModal(false)}
         />
       )}
-    </div>
+    </>
   );
 };
 

@@ -75,12 +75,20 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
               <a href="/my-tasks" className="view-all">View All</a>
             </div>
           </div>
-          <TaskList 
-            tasks={myRecentTasks} 
-            setTasks={setTasks}   
-            users={users} 
-            projects={projects} 
-          />
+          {myRecentTasks.length > 0 ? (
+            <TaskList 
+              tasks={myRecentTasks} 
+              setTasks={setTasks}   
+              users={users} 
+              projects={projects} 
+            />
+          ) : (
+            <div className="empty-state">
+              <div className="empty-icon">📝</div>
+              <h3>No recent tasks</h3>
+              <p>You don't have any tasks assigned yet. Create your first task to get started!</p>
+            </div>
+          )}
         </section>
 
         {/* All Projects */}
