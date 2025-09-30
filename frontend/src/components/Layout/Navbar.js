@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import ThemeToggle from './ThemeToggle'
 
 const Navbar = () => {
   const location = useLocation()
@@ -59,7 +60,9 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="user-menu" ref={dropdownRef}>
+        <div className="nav-right">
+          <ThemeToggle />
+          <div className="user-menu" ref={dropdownRef}>
           <div 
             className="user-info" 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -89,6 +92,7 @@ const Navbar = () => {
               </button>
             </div>
           )}
+          </div>
         </div>
       </div>
     </nav>

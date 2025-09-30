@@ -1449,3 +1449,102 @@ body {
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
+
+/* =================================
+   THEME TOGGLE AND DARK MODE
+   ================================= */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: #f8f9fa;
+  transform: scale(1.1);
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-theme .navbar {
+  background: #2d2d2d;
+  border-bottom-color: #444;
+}
+
+.dark-theme .nav-brand a {
+  color: #e0e0e0;
+}
+
+.dark-theme .nav-item a {
+  color: #b0b0b0;
+}
+
+.dark-theme .nav-item a:hover,
+.dark-theme .nav-item.active a {
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.1);
+}
+
+.dark-theme .user-info {
+  color: #e0e0e0;
+}
+
+.dark-theme .user-info:hover {
+  background: #3a3a3a;
+}
+
+.dark-theme .stat-card,
+.dark-theme .dashboard-section,
+.dark-theme .task-card,
+.dark-theme .team-member-card {
+  background: #2d2d2d;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.dark-theme .modal-content {
+  background: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark-theme .form-group input,
+.dark-theme .form-group textarea,
+.dark-theme .form-group select {
+  background: #3a3a3a;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.dark-theme .form-group input:focus,
+.dark-theme .form-group textarea:focus,
+.dark-theme .form-group select:focus {
+  border-color: #3498db;
+  background: #404040;
+}
+
+.dark-theme .theme-toggle-btn {
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.dark-theme .theme-toggle-btn:hover {
+  background: #3a3a3a;
+}
