@@ -1,10 +1,10 @@
-# 🚀 TaskTrail - Project Management Application
+#  TaskTrail - Project Management Application
 
 TaskTrail is a modern, full-stack project management application designed to help teams collaborate, track tasks, and manage projects efficiently. Built with React and Flask, it provides an intuitive interface for seamless project management.
 
 ![TaskTrail](https://img.shields.io/badge/Status-Active-brightgreen) ![React](https://img.shields.io/badge/React-18.2.0-blue) ![Flask](https://img.shields.io/badge/Flask-3.1.2-green) ![Python](https://img.shields.io/badge/Python-3.8+-yellow)
 
-## ✨ Features
+##  Features
 
 -  **Project Management**: Create, view, update, and delete projects
 -  **Task Creation & Tracking**: Add new tasks with status management
@@ -28,7 +28,7 @@ TaskTrail is a modern, full-stack project management application designed to hel
 - **SQLite** - Development database
 - **Flask-JWT-Extended** - Authentication
 
-## �️ Installation
+##  Installation
 
 ### Prerequisites
 - Node.js (v14 or later)
@@ -68,7 +68,7 @@ TaskTrail is a modern, full-stack project management application designed to hel
    export FLASK_DEBUG=true
    ```
 
-## 🚀 Running the Application
+##  Running the Application
 
 1. **Start the backend server**
    ```bash
