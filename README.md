@@ -6,14 +6,14 @@ TaskTrail is a modern, full-stack project management application designed to hel
 
 ## ✨ Features
 
-- 📋 **Project Management**: Create, view, update, and delete projects
-- ✅ **Task Creation & Tracking**: Add new tasks with status management
-- 👥 **Team Collaboration**: Assign tasks to team members
-- 🔐 **User Authentication**: Secure login and registration
-- 📱 **Responsive Design**: Works on desktop and mobile devices
-- 🎨 **Modern UI**: Clean and intuitive interface
+-  **Project Management**: Create, view, update, and delete projects
+-  **Task Creation & Tracking**: Add new tasks with status management
+-  **Team Collaboration**: Assign tasks to team members
+-  **User Authentication**: Secure login and registration
+-  **Responsive Design**: Works on desktop and mobile devices
+-  **Modern UI**: Clean and intuitive interface
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React.js** - Component-based UI framework
@@ -88,7 +88,7 @@ TaskTrail is a modern, full-stack project management application designed to hel
    - Open http://localhost:3000 in your browser
    - Use any email/password to sign in (demo mode)
 
-## 🎯 Usage
+##  Usage
 
 1. **Sign In**: Use any email and password (demo authentication)
 2. **Dashboard**: View project overview and task statistics
@@ -97,7 +97,7 @@ TaskTrail is a modern, full-stack project management application designed to hel
 5. **Team View**: See all team members and their assignments
 6. **Profile**: View and manage your profile information
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 phase-4-project/
@@ -119,15 +119,15 @@ phase-4-project/
 └── README.md               # This file
 ```
 
-## 🔧 Recent Updates
+##  Recent Updates
 
-- ✅ Fixed authentication routing issues
-- ✅ Added task creation functionality with modal form
-- ✅ Improved error handling and validation
-- ✅ Enhanced UI with responsive design
-- ✅ Resolved performance issues with database queries
+-  Fixed authentication routing issues
+-  Added task creation functionality with modal form
+-  Improved error handling and validation
+-  Enhanced UI with responsive design
+-  Resolved performance issues with database queries
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/NewFeature`)
@@ -135,11 +135,11 @@ phase-4-project/
 4. Push to branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 
-## 📝 License
+##  License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🙏 Built With
+##  Built With
 
 - [React](https://reactjs.org/) - Frontend framework
 - [Flask](https://flask.palletsprojects.com/) - Backend framework
@@ -147,4 +147,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**TaskTrail** - Making project management simple and efficient! 🎯
+**TaskTrail** - Making project management simple and efficient! 

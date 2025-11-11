@@ -82,7 +82,7 @@ const MyTasks = ({ tasks, setTasks, users, projects }) => {
 
       {filteredTasks.length === 0 && (
         <div className="empty-state">
-          <div className="empty-icon">📝</div>
+          <div className="empty-icon"></div>
           <h3>No tasks found</h3>
           <p>
             {filter === 'all' 

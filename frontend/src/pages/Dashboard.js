@@ -24,35 +24,35 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>Welcome back, {currentUser.name}! 👋</h1>
+        <h1>Welcome back, {currentUser.name}! </h1>
         <p>Here's what's happening with your projects today.</p>
       </div>
       
       {/* Statistics Grid */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon">📁</div>
+          <div className="stat-icon"></div>
           <div className="stat-content">
             <h3>{stats.totalProjects}</h3>
             <p>Total Projects</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">✅</div>
+          <div className="stat-icon"></div>
           <div className="stat-content">
             <h3>{stats.totalTasks}</h3>
             <p>Total Tasks</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">🚀</div>
+          <div className="stat-icon"></div>
           <div className="stat-content">
             <h3>{stats.inProgressTasks}</h3>
             <p>In Progress</p>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">🎯</div>
+          <div className="stat-icon"></div>
           <div className="stat-content">
             <h3>{stats.myTasks}</h3>
             <p>My Tasks</p>
@@ -84,7 +84,7 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
             />
           ) : (
             <div className="empty-state">
-              <div className="empty-icon">📝</div>
+              <div className="empty-icon"></div>
               <h3>No recent tasks</h3>
               <p>You don't have any tasks assigned yet. Create your first task to get started!</p>
             </div>
@@ -114,7 +114,7 @@ const Dashboard = ({ projects, tasks, setTasks, users }) => {
               </div>
             </div>
             <div className="activity-item">
-              <span className="activity-icon">✅</span>
+              <span className="activity-icon"></span>
               <div className="activity-content">
                 <p>Task "Create marketing materials" was completed</p>
                 <span className="activity-time">1 day ago</span>
